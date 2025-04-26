@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flask app for Code-a-thon</title>
+</head>
+
+<body>
+  <header>
+    <h1>Colours</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Item ID</th>
+          <th>Colour</th>
+          <th>Hex Colour</th>
+          <th>CHSV</th>
+          <th>Sample</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in content %}
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.color }}</td>
+          <td>{{ item.hex }}</td>
+          <td>{{ item.chsv }}</td>
+          <td style="background-color: #{{ item.hex }}">
+            &nbsp
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </header>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flask app for Code-a-thon</title>
+</head>
+
+<body>
+  <div class="IoTDiv">
+    <h2>Detailed Info</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Item Ref</th>
+          <th>Stock</th>
+          <th>Description</th>
+          <th>Cost</th>
+          <th>Department</th>
+          <th>Order</th>
+          <th>Colour</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ item.ca_sngl_item_ref }}</td>
+          <td>{{ item.in_sngl_stock }}</td>
+          <td>{{ item.ca_sngl_description }}</td>
+          <td>{{ item.ca_sngl_cost }}</td>
+          <td>{{ item.ca_sngl_department }}</td>
+          <td>{{ item.on_sngl_order }}</td>
+          <td style="background-color: #{{ hexColor }}">
+            &nbsp
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    <img src="http://192.86.32.12:1880/product/image/{{ item.ca_sngl_item_ref }}" style="width:100px;height:120px;">
+  </div>
+
+  <div class="OrderDiv">
+    <h2>Order an Item</h2>
+
+    <form action="/Order" method="POST">
+      <label for="userID">Name:</label><br>
+      <input type="text" id="userID" name="userID" value="John"><br>
+
+      <label for="dept">Department:</label><br>
+      <input type="text" id="dept" name="dept" value="ZXPHACK"><br>
+
+      <label for="qty">Quantity:</label><br>
+      <input type="text" id="qty" name="qty" value="1"><br>
+
+      <input type="hidden" id="itemRef" name="itemRef" value="{{ item.ca_sngl_item_ref }}">
+      <input type="hidden" id="color" name="hex_color" value="{{ hexColor }}">
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+</body>
+
+</html>

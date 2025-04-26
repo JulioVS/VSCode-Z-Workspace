@@ -1,0 +1,20 @@
+{
+  "channel": [
+    {
+      "general": {
+        "description": "WebSphere Application Server channel"
+      },
+      "name": "WAS.JMS.SVRCONN",
+      "clientConnection": {
+        "connection": [
+          {
+            "host": "204.90.115.200",
+            "port": 11443
+          }
+        ],
+        "queueManager": "CSQ9"
+      },
+      "type": "clientConnection"
+    }
+  ]
+}

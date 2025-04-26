@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flask app for Code-a-thon</title>
+</head>
+
+<body>
+  <header>
+    <h1>Catalog items</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ItemID</th>
+          <th>Description</th>
+          <th>on Order</th>
+          <th>in Stock</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in catalog %}
+        <tr>
+          <td>{{ item.ca_item_ref }}</td>
+          <td>
+            <img src="http://192.86.32.12:1880/product/image/{{ item.ca_item_ref }}" style="width:25px;height:30px;">
+          </td>
+          <td>
+            <a href="/detailedInfo?itemID={{ item.ca_item_ref }}">{{ item.ca_description }}</a>
+          </td>
+          <td>{{ item.on_order }}</td>
+          <td>{{ item.in_stock }}</td>
+          <td>{{ item.ca_cost }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </header>
+</body>
+
+</html>

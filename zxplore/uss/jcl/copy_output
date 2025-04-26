@@ -1,0 +1,13 @@
+1                                         IEBCOPY MESSAGES AND CONTROL STATEMENTS                              PAGE     1
+-IEB1135I IEBCOPY  FMID HDZ3310  SERVICE LEVEL UJ93303  DATED 20230725 DFSMS 03.01.00 z/OS    03.01.00 HBB77E0  CPU 3931 
+ IEB1035I Z458643   STEP1    19:01:00 WED 01 JAN 2025 PARM=''                                                            
+- COPY OUTDD=OUTDS,INDD=INDS                                                                                             
+  SELECT MEMBER=(MEMBER1,MEMBER5,MEMBER6)                                                                                
+0IEB1013I COPYING FROM PDS   INDD=INDS     VOL=VPWRKC DSN=ZXP.PUBLIC.J2PDATA                                             
+ IEB1014I           TO PDSE OUTDD=OUTDS    VOL=ZXPM02 DSN=Z45864.OUTPUT                                                  
+ IGW01551I MEMBER MEMBER1  HAS BEEN COPIED                                                                               
+ IGW01551I MEMBER MEMBER6  HAS BEEN COPIED                                                                               
+ IGW01550I 2 OF 3 SPECIFIED  MEMBERS WERE COPIED                                                                         
+ IEB177I MEMBER5  WAS SELECTED BUT NOT FOUND IN ANY INPUT DATA SET                                                       
+ IEB151I JOB HAS TERMINATED WITH ERROR(S)                                                                                
+ IEB147I END OF JOB - 4 WAS HIGHEST SEVERITY CODE                                                                        

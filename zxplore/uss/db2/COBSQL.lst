@@ -1,0 +1,227 @@
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021                 Date 12/30/2024  Time 15:06:55   Page     1                
+0Invocation parameters:                                                                                                              
+  RENT,TERM,SQL('ATTACH(CAF)'),DYNAM                                                                                                 
+0Options in effect:                                                                                                                  
+  NOADATA                                                                                                                            
+    ADV                                                                                                                              
+    AFP(NOVOLATILE)                                                                                                                  
+    QUOTE                                                                                                                            
+    ARCH(10)                                                                                                                         
+    ARITH(COMPAT)                                                                                                                    
+  NOAWO                                                                                                                              
+  NOBLOCK0                                                                                                                           
+    BUFSIZE(4096)                                                                                                                    
+  NOCICS                                                                                                                             
+    CODEPAGE(1140)                                                                                                                   
+  NOCOMPILE(S)                                                                                                                       
+    CONDCOMP(NOSKIPSRC)                                                                                                              
+  NOCOPYLOC                                                                                                                          
+  NOCOPYRIGHT                                                                                                                        
+  NOCURRENCY                                                                                                                         
+    DATA(31)                                                                                                                         
+    DBCS                                                                                                                             
+  NODECK                                                                                                                             
+  NODEFINE                                                                                                                           
+  NODIAGTRUNC                                                                                                                        
+    DISPSIGN(COMPAT)                                                                                                                 
+  NODLL                                                                                                                              
+  NODUMP                                                                                                                             
+    DYNAM                                                                                                                            
+  NOEXIT                                                                                                                             
+  NOEXPORTALL                                                                                                                        
+  NOFASTSRT                                                                                                                          
+    FLAG(I,I)                                                                                                                        
+  NOFLAGSTD                                                                                                                          
+    HGPR(PRESERVE)                                                                                                                   
+  NOINITCHECK                                                                                                                        
+  NOINITIAL                                                                                                                          
+    INLINE                                                                                                                           
+    INTDATE(ANSI)                                                                                                                    
+  NOINVDATA                                                                                                                          
+  NOJAVAIOP                                                                                                                          
+    LANGUAGE(EN)                                                                                                                     
+    LINECOUNT(60)                                                                                                                    
+  NOLIST                                                                                                                             
+    LP(32)                                                                                                                           
+  NOMAP                                                                                                                              
+    MAXPCF(100000)                                                                                                                   
+  NOMDECK                                                                                                                            
+  NONAME                                                                                                                             
+    NSYMBOL(NATIONAL)                                                                                                                
+  NONUMBER                                                                                                                           
+  NONUMCHECK                                                                                                                         
+    NUMPROC(NOPFD)                                                                                                                   
+    OBJECT                                                                                                                           
+  NOOFFSET                                                                                                                           
+    OPTIMIZE(0)                                                                                                                      
+    OUTDD(SYSOUT)                                                                                                                    
+  NOPARMCHECK                                                                                                                        
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021                 Date 12/30/2024  Time 15:06:55   Page     2                
+0   PGMNAME(COMPAT)                                                                                                                  
+    QUALIFY(COMPAT)                                                                                                                  
+    RENT                                                                                                                             
+    RMODE(AUTO)                                                                                                                      
+  NORULES                                                                                                                            
+  NOSERVICE                                                                                                                          
+    SEQUENCE                                                                                                                         
+    SMARTBIN                                                                                                                         
+    SOURCE(DEC)                                                                                                                      
+    SPACE(1)                                                                                                                         
+    SQL('ATTACH(CAF)')                                                                                                               
+    SQLCCSID                                                                                                                         
+  NOSQLIMS                                                                                                                           
+  NOSSRANGE                                                                                                                          
+  NOSTGOPT                                                                                                                           
+    SUPPRESS                                                                                                                         
+    TERM                                                                                                                             
+  NOTEST(NODWARF,NOSOURCE,NOSEPARATE)                                                                                                
+  NOTHREAD                                                                                                                           
+    TRUNC(STD)                                                                                                                       
+    TUNE(10)                                                                                                                         
+  NOVBREF                                                                                                                            
+    VLR(STANDARD)                                                                                                                    
+    VSAMOPENFS(COMPAT)                                                                                                               
+  NOWORD                                                                                                                             
+    XMLPARSE(XMLSS)                                                                                                                  
+    XREF(FULL)                                                                                                                       
+    ZWB                                                                                                                              
+                                                                                                                                     
+         IGYOS4077-I   DSNH4790I DSNHPSRV  DSNHDECP HAS CCSID 1047 IN EFFECT                                                         
+                                                                                                                                     
+                                                                                                                                     
+         IGYOS4078-W   DSNH4791I DSNHPSRV  CCSID 1140 IS USED TO PROCESS SQL, BUT DSNHDECP HAS EBCDIC CCSID 1047 IN EFFECT           
+                                                                                                                                     
+                                                                                                                                     
+         IGYOS4077-I   DSNH4760I DSNHPSRV  THE DB2 SQL COPROCESSOR IS USING THE LEVEL 2 INTERFACE UNDER DB2 V13                      
+                                                                                                                                     
+-SQL Options in effect:                                                                                                              
+  ATTACH(CAF)                                                                                                                        
+  CCSID(1140)                                                                                                                        
+  CONNECT(2)                                                                                                                         
+  DEC(15)                                                                                                                            
+  DECP(DSNHDECP)                                                                                                                     
+  SQLLEVEL(V13R1M504)                                                                                                                
+  ONEPASS                                                                                                                            
+  PERIOD                                                                                                                             
+  QUOTESQL                                                                                                                           
+  STDSQL(NO)                                                                                                                         
+  SQL(DB2)                                                                                                                           
+  NOXREF                                                                                                                             
+  NOSOURCE                                                                                                                           
+  DSNHDECP LOADED FROM - (DSND10.DBDG.SDSNEXIT(DSNHDECP))                                                                            
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021       COBSQL    Date 12/30/2024  Time 15:06:55   Page     3                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000001               *****************************************************************                                            
+   000002                IDENTIFICATION DIVISION.                                                                                    
+   000003                PROGRAM-ID. COBSQL.                                                                                         
+   000004                AUTHOR. Julio Errecart.                                                                                     
+   000005               *****************************************************************                                            
+   000006                ENVIRONMENT DIVISION.                                                                                       
+   000007               *****************************************************************                                            
+   000008                DATA DIVISION.                                                                                              
+   000009                WORKING-STORAGE SECTION.                                                                                    
+   000010               *                                                                                                            
+   000011                EXEC SQL INCLUDE SQLCA END-EXEC.                                                                            
+   000012C               01 SQLCA GLOBAL VOLATILE.                                                 * *                               
+   000013C                   05 SQLCAID PIC X(8).                                                                                    
+   000014C                   05 SQLCABC PIC S9(9) COMP-5.                                                                            
+   000015C                   05 SQLCODE PIC S9(9) COMP-5.                                                                            
+   000016C                   05 SQLERRM.                                                                                             
+   000017C                     49 SQLERRML PIC S9(4) COMP-5.                                                                         
+   000018C                     49 SQLERRMC PIC X(70).                                                                                
+   000019C                   05 SQLERRP PIC X(8).                                                                                    
+   000020C                   05 SQLERRD PIC S9(9) COMP-5                                                                             
+   000021C                              OCCURS 6 TIMES.                                                                              
+   000022C                   05 SQLWARN.                                                                                             
+   000023C                     10 SQLWARN0 PIC X.                                                                                    
+   000024C                     10 SQLWARN1 PIC X.                                                                                    
+   000025C                     10 SQLWARN2 PIC X.                                                                                    
+   000026C                     10 SQLWARN3 PIC X.                                                                                    
+   000027C                     10 SQLWARN4 PIC X.                                                                                    
+   000028C                     10 SQLWARN5 PIC X.                                                                                    
+   000029C                     10 SQLWARN6 PIC X.                                                                                    
+   000030C                     10 SQLWARN7 PIC X.                                                                                    
+   000031C                   05 SQLEXT.                                                                                              
+   000032C                     10 SQLWARN8 PIC X.                                                                                    
+   000033C                     10 SQLWARN9 PIC X.                                                                                    
+   000034C                     10 SQLWARNA PIC X.                                                                                    
+   000035C                     10 SQLSTATE PIC X(5).                                                                                 
+   000036               *                                                                                                            
+   000037                01 RESULT PIC S99999 COMP-3.                                                                                
+   000038               *****************************************************************                                            
+   000039                PROCEDURE DIVISION.                                                                                         
+   000040                MAIN-PARA.                                                                                                  
+   000041                    CALL 'ZXPDSN'.                                                        EXT                               
+   000042                                                                                                                            
+   000043                    EXEC SQL                                                                                                
+   000044                       SELECT COUNT(*) INTO :RESULT                                       37                                
+   000045                       FROM SYSIBM.SYSTABLES                                                                                
+   000046                    END-EXEC.                                                             EXT IMP                           
+   000047                                                                                                                            
+   000048                    DISPLAY RESULT.                                                       37                                
+   000049                    STOP RUN.                                                                                               
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021       COBSQL    Date 12/30/2024  Time 15:06:55   Page     4                
+0An "M" preceding a data-name reference indicates that the data-name is modified by this reference.                                  
+                                                                                                                                     
+  Defined   Cross-reference of data names   References                                                                               
+                                                                                                                                     
+       37   RESULT . . . . . . . . . . . .  44 48                                                                                    
+        0   SQL---PLIST. . . . . . . . . .  46                                                                                       
+       12   SQLCA                                                                                                                    
+       14   SQLCABC                                                                                                                  
+       13   SQLCAID                                                                                                                  
+       15   SQLCODE                                                                                                                  
+       20   SQLERRD                                                                                                                  
+       16   SQLERRM                                                                                                                  
+       18   SQLERRMC                                                                                                                 
+       17   SQLERRML                                                                                                                 
+       19   SQLERRP                                                                                                                  
+       31   SQLEXT                                                                                                                   
+       35   SQLSTATE                                                                                                                 
+       22   SQLWARN                                                                                                                  
+       34   SQLWARNA                                                                                                                 
+       23   SQLWARN0                                                                                                                 
+       24   SQLWARN1                                                                                                                 
+       25   SQLWARN2                                                                                                                 
+       26   SQLWARN3                                                                                                                 
+       27   SQLWARN4                                                                                                                 
+       28   SQLWARN5                                                                                                                 
+       29   SQLWARN6                                                                                                                 
+       30   SQLWARN7                                                                                                                 
+       32   SQLWARN8                                                                                                                 
+       33   SQLWARN9                                                                                                                 
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021       COBSQL    Date 12/30/2024  Time 15:06:55   Page     5                
+0Context usage is indicated by the letter preceding a procedure-name reference.                                                      
+ These letters and their meanings are:                                                                                               
+     A = ALTER (procedure-name)                                                                                                      
+     D = GO TO (procedure-name) DEPENDING ON                                                                                         
+     E = End of range of (PERFORM) through (procedure-name)                                                                          
+     G = GO TO (procedure-name)                                                                                                      
+     P = PERFORM (procedure-name)                                                                                                    
+     T = (ALTER) TO PROCEED TO (procedure-name)                                                                                      
+     U = USE FOR DEBUGGING (procedure-name)                                                                                          
+                                                                                                                                     
+  Defined   Cross-reference of procedures   References                                                                               
+                                                                                                                                     
+       40   MAIN-PARA                                                                                                                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021       COBSQL    Date 12/30/2024  Time 15:06:55   Page     6                
+0 Defined   Cross-reference of programs     References                                                                               
+                                                                                                                                     
+        3   COBSQL                                                                                                                   
+ EXTERNAL   DSNHLI2. . . . . . . . . . . .  46                                                                                       
+ EXTERNAL   ZXPDSN . . . . . . . . . . . .  41                                                                                       
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P241021       COBSQL    Date 12/30/2024  Time 15:06:55   Page     7                
+0LineID  Message code  Message text                                                                                                  
+                                                                                                                                     
+         IGYDS0139-W   Diagnostic messages were issued during processing of compiler options.  These messages are located at the     
+                       beginning of the listing.                                                                                     
+-Messages    Total    Informational    Warning    Error    Severe    Terminating                                                     
+0Printed:       4           2              2                                                                                         
+-* Statistics for COBOL program COBSQL:                                                                                              
+ *    Source records = 218                                                                                                           
+ *    Data Division statements = 101                                                                                                 
+ *    Procedure Division statements = 4                                                                                              
+ *    Generated COBOL statements = 23                                                                                                
+ *    Program complexity factor = 29                                                                                                 
+0End of compilation 1,  program COBSQL,  highest severity 4.                                                                         
+0Return code 4                                                                                                                       

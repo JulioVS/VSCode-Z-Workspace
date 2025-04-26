@@ -1,0 +1,139 @@
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221                 Date 04/07/2025  Time 17:17:30   Page     1                
+0Invocation parameters:                                                                                                              
+  RENT,TERM                                                                                                                          
+0Options in effect:                                                                                                                  
+  NOADATA                                                                                                                            
+    ADV                                                                                                                              
+    AFP(NOVOLATILE)                                                                                                                  
+    QUOTE                                                                                                                            
+    ARCH(10)                                                                                                                         
+    ARITH(COMPAT)                                                                                                                    
+  NOAWO                                                                                                                              
+  NOBLOCK0                                                                                                                           
+    BUFSIZE(4096)                                                                                                                    
+  NOCICS                                                                                                                             
+    CODEPAGE(1140)                                                                                                                   
+  NOCOMPILE(S)                                                                                                                       
+    CONDCOMP(NOSKIPSRC)                                                                                                              
+  NOCOPYLOC                                                                                                                          
+  NOCOPYRIGHT                                                                                                                        
+  NOCURRENCY                                                                                                                         
+    DATA(31)                                                                                                                         
+    DBCS                                                                                                                             
+  NODECK                                                                                                                             
+  NODEFINE                                                                                                                           
+  NODIAGTRUNC                                                                                                                        
+    DISPSIGN(COMPAT)                                                                                                                 
+  NODLL                                                                                                                              
+  NODUMP                                                                                                                             
+  NODYNAM                                                                                                                            
+  NOEXIT                                                                                                                             
+  NOEXPORTALL                                                                                                                        
+  NOFASTSRT                                                                                                                          
+    FLAG(I,I)                                                                                                                        
+  NOFLAGSTD                                                                                                                          
+    HGPR(PRESERVE)                                                                                                                   
+  NOINITCHECK                                                                                                                        
+  NOINITIAL                                                                                                                          
+    INLINE                                                                                                                           
+    INTDATE(ANSI)                                                                                                                    
+  NOINVDATA                                                                                                                          
+  NOJAVAIOP                                                                                                                          
+    LANGUAGE(EN)                                                                                                                     
+    LINECOUNT(60)                                                                                                                    
+  NOLIST                                                                                                                             
+    LP(32)                                                                                                                           
+  NOLSACHECK                                                                                                                         
+  NOMAP                                                                                                                              
+    MAXPCF(100000)                                                                                                                   
+  NOMDECK                                                                                                                            
+  NONAME                                                                                                                             
+    NSYMBOL(NATIONAL)                                                                                                                
+  NONUMBER                                                                                                                           
+  NONUMCHECK                                                                                                                         
+    NUMPROC(NOPFD)                                                                                                                   
+    OBJECT                                                                                                                           
+  NOOFFSET                                                                                                                           
+    OPTIMIZE(0)                                                                                                                      
+    OUTDD(SYSOUT)                                                                                                                    
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221                 Date 04/07/2025  Time 17:17:30   Page     2                
+0 NOPARMCHECK                                                                                                                        
+    PGMNAME(COMPAT)                                                                                                                  
+    QUALIFY(COMPAT)                                                                                                                  
+    RENT                                                                                                                             
+    RMODE(AUTO)                                                                                                                      
+  NORULES                                                                                                                            
+  NOSERVICE                                                                                                                          
+    SEQUENCE                                                                                                                         
+    SMARTBIN                                                                                                                         
+    SOURCE(DEC)                                                                                                                      
+    SPACE(1)                                                                                                                         
+  NOSQL                                                                                                                              
+    SQLCCSID                                                                                                                         
+  NOSQLIMS                                                                                                                           
+  NOSSRANGE                                                                                                                          
+  NOSTGOPT                                                                                                                           
+    SUPPRESS                                                                                                                         
+    TERM                                                                                                                             
+  NOTEST(NODWARF,NOSOURCE,NOSEPARATE)                                                                                                
+  NOTHREAD                                                                                                                           
+    TRUNC(STD)                                                                                                                       
+    TUNE(10)                                                                                                                         
+  NOVBREF                                                                                                                            
+    VLR(STANDARD)                                                                                                                    
+    VSAMOPENFS(COMPAT)                                                                                                               
+  NOWORD                                                                                                                             
+    XMLPARSE(XMLSS)                                                                                                                  
+    XREF(FULL)                                                                                                                       
+    ZWB                                                                                                                              
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     3                
+   LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
+0  000001               * Program name: HELLOCOB                                                                                     
+   000002               *****************************************************************                                            
+   000003                IDENTIFICATION DIVISION.                                                                                    
+   000004                PROGRAM-ID. HELLOCOB.                                                                                       
+   000005                AUTHOR. Julio Errecart.                                                                                     
+   000006               *****************************************************************                                            
+   000007                ENVIRONMENT DIVISION.                                                                                       
+   000008               *****************************************************************                                            
+   000009                DATA DIVISION.                                                                                              
+   000010                WORKING-STORAGE SECTION.                                                                                    
+   000011                01 WS-HELLO PIC X(12).                                                                                      
+   000012               *****************************************************************                                            
+   000013                PROCEDURE DIVISION.                                                                                         
+   000014                MAIN-PARA.                                                                                                  
+   000015                    MOVE "Hello world!" TO WS-HELLO.                                      11                                
+   000016                    DISPLAY WS-HELLO.                                                     11                                
+   000017                    STOP RUN.                                                                                               
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     4                
+0An "M" preceding a data-name reference indicates that the data-name is modified by this reference.                                  
+                                                                                                                                     
+  Defined   Cross-reference of data names   References                                                                               
+                                                                                                                                     
+       11   WS-HELLO . . . . . . . . . . .  M15 16                                                                                   
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     5                
+0Context usage is indicated by the letter preceding a procedure-name reference.                                                      
+ These letters and their meanings are:                                                                                               
+     A = ALTER (procedure-name)                                                                                                      
+     D = GO TO (procedure-name) DEPENDING ON                                                                                         
+     E = End of range of (PERFORM) through (procedure-name)                                                                          
+     G = GO TO (procedure-name)                                                                                                      
+     P = PERFORM (procedure-name)                                                                                                    
+     T = (ALTER) TO PROCEED TO (procedure-name)                                                                                      
+     U = USE FOR DEBUGGING (procedure-name)                                                                                          
+                                                                                                                                     
+  Defined   Cross-reference of procedures   References                                                                               
+                                                                                                                                     
+       14   MAIN-PARA                                                                                                                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     6                
+0 Defined   Cross-reference of programs     References                                                                               
+                                                                                                                                     
+        4   HELLOCOB                                                                                                                 
+-* Statistics for COBOL program HELLOCOB:                                                                                            
+ *    Source records = 17                                                                                                            
+ *    Data Division statements = 1                                                                                                   
+ *    Procedure Division statements = 3                                                                                              
+ *    Generated COBOL statements = 0                                                                                                 
+ *    Program complexity factor = 3                                                                                                  
+0End of compilation 1,  program HELLOCOB,  no statements flagged.                                                                    
+0Return code 0                                                                                                                       

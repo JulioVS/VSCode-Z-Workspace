@@ -1,0 +1,12 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "description": "Sample automation project",
+  "license": "MIT",
+  "type": "module",
+  "author": "Julio Errecart",
+  "main": "index.js",
+  "scripts": {
+    "submitJob": "node ./submitJob.js"
+  }
+}

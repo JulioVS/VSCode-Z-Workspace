@@ -1,0 +1,80 @@
+secret.txt exists.
+Processing.................Done!
+
+Output:
+congratulations! you unscrambled the message in the uss challenge!!
+         8 ./.bash_history
+         8 ./.npm/_logs/2024-12-15T14_08_07_370Z-debug-0.log
+         8 ./.npm/_logs/2024-12-15T17_17_26_644Z-debug-0.log
+        24 ./.npm/_logs
+         0 ./.npm/_update-notifier-last-checked
+        32 ./.npm
+         1 ./.npmrc
+         8 ./animals.sh
+         8 ./assembler/fibonacci.s
+        16 ./assembler
+        16 ./cobol-check.config.properties
+         8 ./code1.go
+         8 ./code1.py
+         8 ./code2.go
+         8 ./code2.py
+         8 ./code3.go
+         8 ./codeathons/Assembler_codeathon/ASSY1.s
+         8 ./codeathons/Assembler_codeathon/fibonacci.s
+        24 ./codeathons/Assembler_codeathon
+         8 ./codeathons/Python_codeathon/myapp.py
+         0 ./codeathons/Python_codeathon/webserver.py
+         0 ./codeathons/Python_codeathon/static/css
+         0 ./codeathons/Python_codeathon/static/images
+         8 ./codeathons/Python_codeathon/static
+         8 ./codeathons/Python_codeathon/templates/index.html
+         8 ./codeathons/Python_codeathon/templates/indexdetail.html
+        24 ./codeathons/Python_codeathon/templates
+         8 ./codeathons/Python_codeathon/task2.py
+         8 ./codeathons/Python_codeathon/task3.py
+         8 ./codeathons/Python_codeathon/task4.py
+         8 ./codeathons/Python_codeathon/task5.py
+         8 ./codeathons/Python_codeathon/task6.py
+        88 ./codeathons/Python_codeathon
+         8 ./codeathons/UBASM1.s
+         8 ./codeathons/Db2_codeathon/bind.jcl
+         8 ./codeathons/Db2_codeathon/CHALL3.cbl
+         8 ./codeathons/Db2_codeathon/helloworld.cbl
+        32 ./codeathons/Db2_codeathon
+       160 ./codeathons
+         1 ./directory1/bob
+         1 ./directory1/.you found me
+        10 ./directory1
+         8 ./dslist.py
+         1 ./fixfiles.sh
+         8 ./go2/one.go
+         8 ./go2/two.go
+         8 ./go2/three.go
+         8 ./go2/tools/tools.go
+        16 ./go2/tools
+         8 ./go2/jcl/newksds.jcl
+        16 ./go2/jcl
+         8 ./go2/go.mod
+         8 ./go2/main.go
+        80 ./go2
+         8 ./hackathons/validate-22RW1.jcl
+        16 ./hackathons
+         8 ./j2p/iebcopy/j2p-member-copy-pythonic-friendly.py
+         8 ./j2p/iebcopy/j2p-member-copy-routine.py
+         8 ./j2p/iebcopy/j2p-member-copy.py
+         8 ./j2p/iebcopy/j2p-member-copy-pythonic.py
+         8 ./j2p/iebcopy/j2-copy-members-driver.py
+        48 ./j2p/iebcopy
+        56 ./j2p
+         8 ./marbles.py
+         8 ./members.py
+         8 ./movie-data.csv
+         8 ./odbc/odbc_test.py
+        16 ./odbc
+         8 ./scramble.sh
+         8 ./secret.txt
+         1 ./test/hello-there
+         9 ./test
+         8 ./ussout.txt
+       533 .
+Sun Dec 15 11:28:47 CST 2024

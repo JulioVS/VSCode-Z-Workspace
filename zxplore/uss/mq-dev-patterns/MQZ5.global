@@ -1,0 +1,6 @@
+INFO: Received message: {
+    "server": "loyalty-global",
+    "message": "Awards successfully deposited in global account",
+    "credit": "555",
+    "reply":"ZXP.MQZ3.REPLYTO.QLOCAL@CSQ9"
+}

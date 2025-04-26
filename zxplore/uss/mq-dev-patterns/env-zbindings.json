@@ -1,0 +1,16 @@
+{
+    "MQ_ENDPOINTS": [{
+      "HOST": "127.0.0.1",
+      "PORT": "1414",
+      "QMGR": "CSQ9",
+      "BINDINGS": true,
+      "QUEUE_NAME": "Z45864.MQZ5.REWARDS",
+      "REPLY_QUEUE_NAME": "ZXP.MQZ3.REPLYTO.QLOCAL",
+      "MODEL_QUEUE_NAME": "DEV.APP.MODEL.QUEUE",
+      "DYNAMIC_QUEUE_PREFIX": "APP.REPLIES.*",
+      "TOPIC_NAME": "dev/",
+      "RESPONDER_INACTIVITY_TIMEOUT": 10,
+      "REQUEST_MESSAGE_EXPIRY": 10,
+      "REQUEST_MODE": "REWARDS"
+    }]
+  }

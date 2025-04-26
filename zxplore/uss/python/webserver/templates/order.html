@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Flask app for Code-a-thon</title>
+</head>
+
+<body>
+  <h1>Order item</h1>
+  
+  <div class="OrderDiv">
+    <h2>Order an Item</h2>
+
+    <form action="/Order" method="POST">
+      <label for="userID">Name:</label><br>
+      <input type="text" id="userID" name="userID" value="John"><br>
+
+      <label for="dept">Department:</label><br>
+      <input type="text" id="dept" name="dept" value="ZXPHACK"><br>
+
+      <label for="qty">Quantity:</label><br>
+      <input type="text" id="qty" name="qty" value="1"><br>
+
+      <input type="hidden" id="itemRef" name="itemRef" value={{detailedInfo.itemRef}}>
+      <input type="hidden" id="color" name="hex_color" value="{{detailedInfo.hexColor}}">
+
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+
+</html>
