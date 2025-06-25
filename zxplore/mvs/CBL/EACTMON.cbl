@@ -76,9 +76,9 @@
           05 WS-DEBUG-EIBRESP2         PIC 9(8)  VALUE ZEROES.
           05 FILLER                    PIC X(1)  VALUE '>'.
       *
-       01 WS-DEBUG-MODE                PIC X(1)  VALUE SPACES.
+       01 WS-DEBUG-MODE                PIC X(1)  VALUE 'N'.
           88 I-AM-DEBUGGING                      VALUE 'Y'.
-          88 NOT-DEBUGGING                       VALUE SPACES.
+          88 NOT-DEBUGGING                       VALUE 'N'.
 
        PROCEDURE DIVISION.
       *-----------------------------------------------------------------
@@ -87,7 +87,6 @@
 
       *    >>> DEBUGGING ONLY <<<
            MOVE 'MAIN-LOGIC' TO WS-DEBUG-AID.
-           SET I-AM-DEBUGGING TO TRUE.
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
@@ -133,7 +132,8 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 CONTINUE
-           WHEN DFHRESP(NOTFND)
+           WHEN DFHRESP(CHANNELERR)
+           WHEN DFHRESP(CONTAINERERR)
                 MOVE 'Activity Mon Container Not Found!' TO MON-MESSAGE
                 SET MON-PROCESSING-ERROR TO TRUE
                 PERFORM 9000-RETURN-TO-CALLER
@@ -397,7 +397,7 @@
                 PERFORM 9000-RETURN-TO-CALLER
            END-EVALUATE.
 
-           PERFORM 9100-RETURN-TO-CICS.
+           PERFORM 9200-REDIRECT-TO-SIGNON.
 
        2200-SET-SIGNED-ON-STATUS.
       *    >>> DEBUGGING ONLY <<<
@@ -661,13 +661,18 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-      *    UPDATE CONTAINER WITH ACTIVITY MONITORING DATA.
-           EXEC CICS PUT
-                CONTAINER(APP-ACTMON-CONTAINER-NAME)
-                CHANNEL(APP-ACTMON-CHANNEL-NAME)
-                FROM (ACTIVITY-MONITOR-CONTAINER)
-                FLENGTH(LENGTH OF ACTIVITY-MONITOR-CONTAINER)
-                END-EXEC.
+           IF MON-AC-SIGN-OFF THEN
+      *       IF USER IS SIGNING OFF, CONTAINER HAS JUST BEEN DELETED.
+              CONTINUE
+           ELSE
+      *       IN EVERY OTHER CASE, UPDATE CONTAINER WITH ACTIVITY DATA.
+              EXEC CICS PUT
+                   CONTAINER(APP-ACTMON-CONTAINER-NAME)
+                   CHANNEL(APP-ACTMON-CHANNEL-NAME)
+                   FROM (ACTIVITY-MONITOR-CONTAINER)
+                   FLENGTH(LENGTH OF ACTIVITY-MONITOR-CONTAINER)
+                   END-EXEC
+           END-IF.
 
       *    INITIATE A NEW SIGN-ON TRANSACTION!
            EXEC CICS START

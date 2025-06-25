@@ -27,74 +27,79 @@
       *   DEFINE MY WORKING VARIABLES.
       ******************************************************************
        01 WS-WORKING-VARS.
-          05 WS-CICS-RESPONSE          PIC S9(8) USAGE IS BINARY.
-          05 WS-READ-COUNTER           PIC 9(2).
-          05 WS-LINE-COUNTER           PIC S9(2) USAGE IS BINARY.
-          05 WS-LINE-DISPLAY           PIC 9(2).
-          05 WS-INSP-COUNTER           PIC S9(2) USAGE IS BINARY.
-          05 WS-INDEX                  PIC S9(2) USAGE IS BINARY.
-          05 WS-DEPT-KEY               PIC X(8).
+          05 WS-CICS-RESPONSE       PIC S9(8) USAGE IS BINARY.
+          05 WS-READ-COUNTER        PIC 9(2).
+          05 WS-LINE-COUNTER        PIC S9(2) USAGE IS BINARY.
+          05 WS-LINE-DISPLAY        PIC 9(2).
+          05 WS-INSP-COUNTER        PIC S9(2) USAGE IS BINARY.
+          05 WS-INDEX               PIC S9(2) USAGE IS BINARY.
+          05 WS-DEPT-KEY            PIC X(8).
       *
        01 WS-DISPLAY-MESSAGES.
-          05 WS-MESSAGE                PIC X(79) VALUE SPACES.
-          05 WS-PF7-LABEL              PIC X(9)  VALUE 'PF7 Prev '.
-          05 WS-PF8-LABEL              PIC X(9)  VALUE 'PF8 Next '.
+          05 WS-MESSAGE             PIC X(79)  VALUE SPACES.
+          05 WS-PF7-LABEL           PIC X(9)   VALUE 'PF7 Prev '.
+          05 WS-PF8-LABEL           PIC X(9)   VALUE 'PF8 Next '.
           05 WS-FILTERS-MSG-SF         PIC X(79)
              VALUE 'Set Filter Criteria And Press ENTER Or Leave Blank F
       -            'or Full Listing.'.
-          05 WS-FILTERS-MSG-EF         PIC X(79)
-                                                 VALUE
+          05 WS-FILTERS-MSG-EF      PIC X(79)
+                                               VALUE
                 'Edit Filter Criteria And Press ENTER To Continue.'.
           05 WS-FILTERS-BANNER.
-             10 WS-FIL-KEY-TYPE        PIC X(3)  VALUE SPACES.
-             10 WS-FIL-KEY-VALUE       PIC X(10) VALUE SPACES.
-             10 FILLER                 PIC X(4)  VALUE ' IN:'.
-             10 WS-FIL-INCLUDE         PIC X(10) VALUE SPACES.
-             10 FILLER                 PIC X(4)  VALUE ' EX:'.
-             10 WS-FIL-EXCLUDE         PIC X(10) VALUE SPACES.
-             10 FILLER                 PIC X(4)  VALUE ' AF:'.
-             10 WS-FIL-AFTER           PIC X(8)  VALUE SPACES.
-             10 FILLER                 PIC X(4)  VALUE ' BF:'.
-             10 WS-FIL-BEFORE          PIC X(8)  VALUE SPACES.
+             10 WS-FIL-KEY-TYPE     PIC X(3)   VALUE SPACES.
+             10 WS-FIL-KEY-VALUE    PIC X(10)  VALUE SPACES.
+             10 FILLER              PIC X(4)   VALUE ' IN:'.
+             10 WS-FIL-INCLUDE      PIC X(10)  VALUE SPACES.
+             10 FILLER              PIC X(4)   VALUE ' EX:'.
+             10 WS-FIL-EXCLUDE      PIC X(10)  VALUE SPACES.
+             10 FILLER              PIC X(4)   VALUE ' AF:'.
+             10 WS-FIL-AFTER        PIC X(8)   VALUE SPACES.
+             10 FILLER              PIC X(4)   VALUE ' BF:'.
+             10 WS-FIL-BEFORE       PIC X(8)   VALUE SPACES.
       *
        01 WS-FILTER-FLAGS.
-          03 WS-FILTERS-CHECK          PIC X(1)  VALUE SPACES.
-             88 WS-FILTERS-PASSED                VALUE 'Y'.
-          03 WS-KEY-FILTER-CHECK       PIC X(1)  VALUE SPACES.
-             88 WS-KEY-FILTER-PASSED             VALUE 'Y'.
-          03 WS-DEPT-FILTER-CHECK      PIC X(1)  VALUE SPACES.
-             88 WS-DEPT-FILTER-PASSED            VALUE 'Y'.
-             88 WS-DEPT-FILTER-FAILED            VALUE 'N'.
-          03 WS-DATE-FILTER-CHECK      PIC X(1)  VALUE SPACES.
-             88 WS-DATE-FILTER-PASSED            VALUE 'Y'.
-          03 WS-FILTER-ACTIONS         PIC X(1)  VALUE SPACES.
-             88 WS-ACTION-DISPLAY                VALUE 'D'.
-             88 WS-ACTION-EXIT                   VALUE 'E'.
-             88 WS-ACTION-SIGN-OFF               VALUE 'S'.
-             88 WS-ACTION-CLEAR                  VALUE 'C'.
-             88 WS-ACTION-INVALID                VALUE 'I'.
-             88 WS-ACTION-NOT-SET                VALUE SPACES.
+          03 WS-FILTERS-CHECK       PIC X(1)   VALUE SPACES.
+             88 FILTERS-PASSED                 VALUE 'Y'.
+             88 FILTERS-FAILED                 VALUE 'N'.
+          03 WS-KEY-FILTER-CHECK    PIC X(1)   VALUE SPACES.
+             88 KEY-FILTER-PASSED              VALUE 'Y'.
+          03 WS-DEPT-FILTER-CHECK   PIC X(1)   VALUE SPACES.
+             88 DEPT-FILTER-PASSED             VALUE 'Y'.
+             88 DEPT-FILTER-FAILED             VALUE 'N'.
+          03 WS-DATE-FILTER-CHECK   PIC X(1)   VALUE SPACES.
+             88 DATE-FILTER-PASSED             VALUE 'Y'.
+          03 WS-FILTER-ACTIONS      PIC X(1)   VALUE SPACES.
+             88 ACTION-DISPLAY                 VALUE 'D'.
+             88 ACTION-EXIT                    VALUE 'E'.
+             88 ACTION-SIGN-OFF                VALUE 'S'.
+             88 ACTION-CLEAR                   VALUE 'C'.
+             88 ACTION-INVALID                 VALUE 'I'.
+             88 ACTION-NOT-SET                 VALUE SPACES.
       *
-       01 WS-MAX-ID-VALUE              PIC 9(8)  VALUE 99999999.
-       01 WS-LINES-PER-PAGE            PIC S9(4) USAGE IS BINARY
-                                                 VALUE +16.
+       01 WS-LINES-PER-PAGE         PIC S9(4) USAGE IS BINARY
+                                               VALUE +16.
       *
-       01 WS-DEBUG-AID                 PIC X(45) VALUE SPACES.
+       01 WS-RE-ENTRY-AID.
+          05 WS-RE-ENTRY-FILTERS    PIC X(112) VALUE SPACES.
+          05 WS-RE-ENTRY-FLAG       PIC X(1)   VALUE SPACES.
+             88 RE-ENTRY-FROM-VIEW             VALUE 'Y'.
+      *
+       01 WS-DEBUG-AID              PIC X(45)  VALUE SPACES.
       *
        01 WS-DEBUG-MESSAGE.
-          05 FILLER                    PIC X(5)  VALUE '<MSG:'.
-          05 WS-DEBUG-TEXT             PIC X(45) VALUE SPACES.
-          05 FILLER                    PIC X(1)  VALUE '>'.
-          05 FILLER                    PIC X(5)  VALUE '<EB1='.
-          05 WS-DEBUG-EIBRESP          PIC 9(8)  VALUE ZEROES.
-          05 FILLER                    PIC X(1)  VALUE '>'.
-          05 FILLER                    PIC X(5)  VALUE '<EB2='.
-          05 WS-DEBUG-EIBRESP2         PIC 9(8)  VALUE ZEROES.
-          05 FILLER                    PIC X(1)  VALUE '>'.
+          05 FILLER                 PIC X(5)   VALUE '<MSG:'.
+          05 WS-DEBUG-TEXT          PIC X(45)  VALUE SPACES.
+          05 FILLER                 PIC X(1)   VALUE '>'.
+          05 FILLER                 PIC X(5)   VALUE '<EB1='.
+          05 WS-DEBUG-EIBRESP       PIC 9(8)   VALUE ZEROES.
+          05 FILLER                 PIC X(1)   VALUE '>'.
+          05 FILLER                 PIC X(5)   VALUE '<EB2='.
+          05 WS-DEBUG-EIBRESP2      PIC 9(8)   VALUE ZEROES.
+          05 FILLER                 PIC X(1)   VALUE '>'.
       *
-       01 WS-DEBUG-MODE                PIC X(1)  VALUE SPACES.
-          88 I-AM-DEBUGGING                      VALUE 'Y'.
-          88 NOT-DEBUGGING                       VALUE SPACES.
+       01 WS-DEBUG-MODE             PIC X(1)   VALUE 'N'.
+          88 I-AM-DEBUGGING                    VALUE 'Y'.
+          88 NOT-DEBUGGING                     VALUE 'N'.
 
        PROCEDURE DIVISION.
       *-----------------------------------------------------------------
@@ -103,7 +108,6 @@
 
       *    >>> DEBUGGING ONLY <<<
            MOVE 'MAIN-LOGIC' TO WS-DEBUG-AID.
-           SET I-AM-DEBUGGING TO TRUE.
            PERFORM 9300-DEBUG-AID.
 
            IF I-AM-DEBUGGING THEN
@@ -140,9 +144,16 @@
                 PERFORM 1000-FIRST-INTERACTION
            WHEN DFHRESP(NORMAL)
       *         NEXT INTERACTIONS -> CONTAINER FOUND (CONTINUE)
-                PERFORM 2000-PROCESS-USER-INPUT
+                IF LST-PROGRAM-NAME IS EQUAL TO APP-LIST-PROGRAM-NAME
+                   PERFORM 2000-PROCESS-USER-INPUT
+                   EXIT
+                END-IF
+      *         IF BOUNCING BACK FROM 'VIEW' PAGE, RESTART CONVERSATION
+                IF LST-PROGRAM-NAME IS EQUAL TO APP-VIEW-PROGRAM-NAME
+                   PERFORM 5000-RE-ENTRY-FROM-VIEW
+                END-IF
            WHEN OTHER
-                MOVE 'Error Retrieving Container!' TO WS-MESSAGE
+                MOVE 'Error Retrieving List Container!' TO WS-MESSAGE
            END-EVALUATE.
 
            PERFORM 9000-SEND-MAP-AND-RETURN.
@@ -192,6 +203,11 @@
            MOVE 1 TO LST-CURRENT-PAGE-NUMBER.
            MOVE '1' TO LST-SELECT-KEY-TYPE.
 
+      *    IF BOUNCING BACK FROM 'VIEW DETAILS' PAGE, RESTORE FILTERS.
+           IF RE-ENTRY-FROM-VIEW THEN
+              MOVE WS-RE-ENTRY-FILTERS TO LST-FILTERS
+           END-IF.
+
        1200-GET-INITIAL-FILTERS.
       *    >>> DEBUGGING ONLY <<<
            MOVE '1200-GET-INITIAL-FILTERS' TO WS-DEBUG-AID.
@@ -210,9 +226,9 @@
            INITIALIZE WS-FILTER-ACTIONS.
 
            PERFORM 3000-DISPLAY-FILTERS-SCREEN
-              UNTIL WS-ACTION-DISPLAY
-              OR WS-ACTION-EXIT
-              OR WS-ACTION-SIGN-OFF.
+              UNTIL ACTION-DISPLAY
+              OR ACTION-EXIT
+              OR ACTION-SIGN-OFF.
 
        1300-READ-EMPLOYEES-BY-KEY.
       *    >>> DEBUGGING ONLY <<<
@@ -275,7 +291,7 @@
                    RIDFLD(EMP-PRIMARY-NAME)
                    RESP(WS-CICS-RESPONSE)
                    END-EXEC
-           END-IF
+           END-IF.
 
       *    WILL GIVE A '16' (+20) ERROR RETURN CODE IF NOT DEFINED AS
       *    'BROWSABLE' IN THE CICS FILE DEFINITION ENTRY!
@@ -293,7 +309,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Browsing Employee Master File' TO WS-MESSAGE
+                CONTINUE
            WHEN DFHRESP(NOTFND)
                 MOVE 'No Records Found!' TO WS-MESSAGE
                 SET LST-END-OF-FILE TO TRUE
@@ -350,10 +366,10 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Reading Employee Master File' TO WS-MESSAGE
                 PERFORM 3200-APPLY-FILTERS
+                PERFORM 3700-CHECK-DELETION
 
-                IF WS-FILTERS-PASSED THEN
+                IF FILTERS-PASSED THEN
                    MOVE EMPLOYEE-MASTER-RECORD TO
                       LST-CURRENT-RECORD(LST-RECORD-INDEX)
                    SET LST-RECORD-INDEX UP BY 1
@@ -393,7 +409,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'End of Browsing Master File' TO WS-MESSAGE
+                CONTINUE
            WHEN OTHER
                 MOVE 'Error Ending Browse!' TO WS-MESSAGE
                 PERFORM 9000-SEND-MAP-AND-RETURN
@@ -483,10 +499,10 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Reading Employee Master File' TO WS-MESSAGE
                 PERFORM 3200-APPLY-FILTERS
+                PERFORM 3700-CHECK-DELETION
 
-                IF WS-FILTERS-PASSED THEN
+                IF FILTERS-PASSED THEN
                    MOVE EMPLOYEE-MASTER-RECORD TO
                       LST-CURRENT-RECORD(LST-RECORD-INDEX)
                    SET LST-RECORD-INDEX DOWN BY 1
@@ -512,9 +528,7 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-      *    >>> CALL ACTIVITY MONITOR <<<
-           PERFORM 4000-CHECK-USER-STATUS.
-      *    >>> --------------------- <<<
+           MOVE 'So Far, So Good...' TO WS-MESSAGE.
 
            EXEC CICS RECEIVE
                 MAP(APP-LIST-MAP-NAME)
@@ -522,10 +536,15 @@
                 INTO (ELSTMI)
                 END-EXEC.
 
+      *    >>> CALL ACTIVITY MONITOR <<<
+           PERFORM 4000-CHECK-USER-STATUS.
+      *    >>> --------------------- <<<
+
            EVALUATE EIBAID
            WHEN DFHENTER
                 PERFORM 2100-SHOW-DETAILS
            WHEN DFHPF3
+           WHEN DFHPF12
                 PERFORM 2200-SHOW-FILTERS
            WHEN DFHPF7
                 PERFORM 2300-PREV-BY-EMPLOYEE-KEY
@@ -533,8 +552,6 @@
                 PERFORM 2400-NEXT-BY-EMPLOYEE-KEY
            WHEN DFHPF10
                 PERFORM 2500-SIGN-USER-OFF
-           WHEN DFHPF12
-                PERFORM 2600-CANCEL-ACTION
            WHEN OTHER
                 MOVE 'Invalid Key!' TO WS-MESSAGE
            END-EVALUATE.
@@ -562,8 +579,39 @@
                          DELIMITED BY SIZE
                          INTO WS-MESSAGE
                       END-STRING
+
+                      SET LST-SELECT-LINE-NUMBER TO LINEO-INDEX
+                      PERFORM 2150-TRANSFER-TO-DETAILS-PAGE
                    END-IF
            END-PERFORM.
+
+       2150-TRANSFER-TO-DETAILS-PAGE.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '2150-TRANSFER-TO-DETAILS-PAGE' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+           PERFORM 9150-PUT-LIST-CONTAINER.
+
+           EXEC CICS XCTL
+                PROGRAM(APP-VIEW-PROGRAM-NAME)
+                CHANNEL(APP-LIST-CHANNEL-NAME)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                MOVE 'Transferring To Details Page' TO WS-MESSAGE
+           WHEN DFHRESP(INVREQ)
+                MOVE 'Invalid Request!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN DFHRESP(PGMIDERR)
+                MOVE 'Details Program Not Found!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN OTHER
+                MOVE 'Error Transferring To Details Page!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           END-EVALUATE.
 
        2200-SHOW-FILTERS.
       *    >>> DEBUGGING ONLY <<<
@@ -574,9 +622,9 @@
            INITIALIZE WS-FILTER-ACTIONS.
 
            PERFORM 3000-DISPLAY-FILTERS-SCREEN
-              UNTIL WS-ACTION-DISPLAY
-              OR WS-ACTION-EXIT
-              OR WS-ACTION-SIGN-OFF.
+              UNTIL ACTION-DISPLAY
+              OR ACTION-EXIT
+              OR ACTION-SIGN-OFF.
 
            PERFORM 2210-RESET-BROWSING-VALUES.
            PERFORM 1300-READ-EMPLOYEES-BY-KEY.
@@ -639,7 +687,7 @@
       *          IN ORDER TO GO BACKWARDS, WE JUST SET THE EMPLOYEE ID
       *          TO A FICTIONAL 'MAXIMUM VALUE'.
                  IF LST-SEL-BY-EMPLOYEE-ID THEN
-                    MOVE WS-MAX-ID-VALUE TO EMP-EMPLOYEE-ID
+                    MOVE HIGH-VALUES TO EMP-KEY
                  ELSE
                     MOVE HIGH-VALUES TO EMP-PRIMARY-NAME
                  END-IF
@@ -701,13 +749,13 @@
 
            PERFORM 9200-RETURN-TO-CICS.
 
-       2600-CANCEL-ACTION.
-      *    >>> DEBUGGING ONLY <<<
-           MOVE '2600-CANCEL-ACTION' TO WS-DEBUG-AID.
-           PERFORM 9300-DEBUG-AID.
-      *    >>> -------------- <<<
+      *2600-CANCEL-ACTION.
+      **    >>> DEBUGGING ONLY <<<
+      *    MOVE '2600-CANCEL-ACTION' TO WS-DEBUG-AID.
+      *    PERFORM 9300-DEBUG-AID.
+      **    >>> -------------- <<<
 
-           CONTINUE.
+      *    PERFORM 9200-RETURN-TO-CICS.
 
       *-----------------------------------------------------------------
        FILTERS SECTION.
@@ -742,7 +790,15 @@
 
            INITIALIZE EFILMO.
 
+      *    DISPLAY TRANSACTION ID.
            MOVE EIBTRNID TO TRANFLO.
+
+      *    DISPLAY CURRENTLY LOGGED-IN USER, IF ANY.
+           IF MON-USER-ID IS NOT EQUAL TO SPACES THEN
+              MOVE MON-USER-ID TO LOGDFLO
+           ELSE
+              MOVE '<Anonym>' TO LOGDFLO
+           END-IF.
 
       *    IF THIS IS THE FIRST INVOCATION OF THE PARAGRAPH, IE.
       *    FIRST STEP IN THE CONVERSATION, WE SET A DEFAULT SELECT
@@ -762,10 +818,13 @@
 
       *    IF AN INVALID KEY WAS PRESEED ON THE PREVOUS MAP DISPLAY,
       *    WE ISSUE A WARNING MESSAGE ON NEXT RENDER.
-           IF WS-ACTION-INVALID THEN
+           IF ACTION-INVALID THEN
               MOVE WS-MESSAGE TO MESSFLO
               MOVE DFHPINK TO MESSFLC
            END-IF.
+
+      *    SET ANY MODIFIED DATA TAG (MDT) 'ON' TO AVOID 'AEI9' ABEND.
+           MOVE DFHBMFSE TO TRANFLA.
 
       *    WE RENDER THE INITIAL FILTER MAP.
            EXEC CICS SEND
@@ -789,25 +848,30 @@
 
       *    <<<<<    PROGRAM EXECUTION RESUMES HERE   >>>>>
 
+      *    >>> CALL ACTIVITY MONITOR <<<
+           PERFORM 4000-CHECK-USER-STATUS.
+      *    >>> --------------------- <<<
+
            EVALUATE EIBAID
            WHEN DFHENTER
                 MOVE 'Filter Criteria Entered' TO WS-MESSAGE
-                SET WS-ACTION-DISPLAY TO TRUE
+                SET ACTION-DISPLAY TO TRUE
            WHEN DFHPF3
                 MOVE 'Filter Criteria Cancelled' TO WS-MESSAGE
-                SET WS-ACTION-EXIT TO TRUE
-                PERFORM 2500-SIGN-USER-OFF
+                SET ACTION-EXIT TO TRUE
+                PERFORM 3050-TRANSFER-BACK-TO-MENU
            WHEN DFHPF10
                 MOVE 'Sign Off Requested' TO WS-MESSAGE
-                SET WS-ACTION-SIGN-OFF TO TRUE
+                SET ACTION-SIGN-OFF TO TRUE
                 PERFORM 2500-SIGN-USER-OFF
            WHEN DFHPF12
                 MOVE 'Clear Criteria Requested' TO WS-MESSAGE
-                SET WS-ACTION-CLEAR TO TRUE
+                SET ACTION-CLEAR TO TRUE
                 INITIALIZE LST-FILTERS
+                MOVE '1' TO LST-SELECT-KEY-TYPE
            WHEN OTHER
                 MOVE 'Invalid Key!' TO WS-MESSAGE
-                SET WS-ACTION-INVALID TO TRUE
+                SET ACTION-INVALID TO TRUE
            END-EVALUATE.
 
       *    WITH FILTER CRITERIA ENTERED AND RECEIVED INTO THE MAP'S
@@ -815,55 +879,114 @@
       *    PROCEED INTO THE FILE ACCESS LOGIC.
            PERFORM 3100-SAVE-FILTER-CRITERIA.
 
+       3050-TRANSFER-BACK-TO-MENU.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '3050-TRANSFER-BACK-TO-MENU' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+      *    RESET THIS CONVERSATION BY DELETING CURRENT CONTAINER.
+           PERFORM 3070-DELETE-LIST-CONTAINER.
+
+           EXEC CICS XCTL
+                PROGRAM(APP-MENU-PROGRAM-NAME)
+                CHANNEL(APP-MENU-CHANNEL-NAME)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                MOVE 'Transferring Back To Menu' TO WS-MESSAGE
+           WHEN DFHRESP(INVREQ)
+                MOVE 'Invalid Request!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN DFHRESP(PGMIDERR)
+                MOVE 'Menu Program Not Found!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN OTHER
+                MOVE 'Error Transferring To Menu!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           END-EVALUATE.
+
+       3070-DELETE-LIST-CONTAINER.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '3070-DELETE-LIST-CONTAINER' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+           EXEC CICS DELETE
+                CONTAINER(APP-LIST-CONTAINER-NAME)
+                CHANNEL(APP-LIST-CHANNEL-NAME)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                CONTINUE
+           WHEN DFHRESP(NOTFND)
+                MOVE 'List Container Not Found!' TO WS-MESSAGE
+           WHEN OTHER
+                MOVE 'Error Deleting List Container!' TO WS-MESSAGE
+           END-EVALUATE.
+
        3100-SAVE-FILTER-CRITERIA.
       *    >>> DEBUGGING ONLY <<<
            MOVE '3100-SAVE-FILTER-CRITERIA' TO WS-DEBUG-AID.
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-           IF KEYSELI IS NOT EQUAL TO LOW-VALUES AND
-              KEYSELI IS NOT EQUAL TO SPACES THEN
+      *    EXPERIMENT -> TRY TO DETECT MAP INPUT BY ITS FIELD LENGTH
+      *                  INSTEAD OF USING 'SPACES' OR 'LOW-VALUES'!
+
+           IF KEYSELL IS GREATER THAN ZERO THEN
               MOVE KEYSELI TO LST-SELECT-KEY-TYPE
            END-IF.
 
-           IF MATCHI IS NOT EQUAL TO LOW-VALUES AND
-              MATCHI IS NOT EQUAL TO SPACES THEN
+           IF MATCHL IS GREATER THAN ZERO THEN
               MOVE FUNCTION TRIM(MATCHI) TO LST-SELECT-KEY-VALUE
-              SET LST-FILTERS-SET TO TRUE
+
+      *       IF AN ALPHANUMERIC STRING WAS ENTERED AS A KEY VALUE FOR
+      *       FILTERING, WE JUST ASUME THE USER MEANT TO USE 'BY NAME'
+      *       AS THE SELECT CRITERIA...EVEN IF HE DIDN'T!
+              IF FUNCTION TRIM(MATCHI) IS NOT NUMERIC THEN
+                 SET LST-SEL-BY-EMPLOYEE-NAME TO TRUE
+              END-IF
            END-IF.
 
            PERFORM VARYING WS-INDEX
               FROM 1 BY 1
               UNTIL WS-INDEX IS GREATER THAN 4
-                   IF DPTINCLI(WS-INDEX) IS NOT EQUAL TO LOW-VALUES AND
-                      DPTINCLI(WS-INDEX) IS NOT EQUAL TO SPACES
+                   IF DPTINCLL(WS-INDEX) IS GREATER THAN ZERO THEN
                       MOVE FUNCTION TRIM(DPTINCLI(WS-INDEX))
                          TO LST-INCL-DEPT-ID(WS-INDEX)
-                      SET LST-FILTERS-SET TO TRUE
                    END-IF
            END-PERFORM.
 
            PERFORM VARYING WS-INDEX
               FROM 1 BY 1
               UNTIL WS-INDEX IS GREATER THAN 4
-                   IF DPTEXCLI(WS-INDEX) IS NOT EQUAL TO LOW-VALUES AND
-                      DPTEXCLI(WS-INDEX) IS NOT EQUAL TO SPACES
+                   IF DPTEXCLL(WS-INDEX) IS GREATER THAN ZERO THEN
                       MOVE FUNCTION TRIM(DPTEXCLI(WS-INDEX))
                          TO LST-EXCL-DEPT-ID(WS-INDEX)
-                      SET LST-FILTERS-SET TO TRUE
                    END-IF
            END-PERFORM.
 
-           IF EDATEAI IS NOT EQUAL TO LOW-VALUES AND
-              EDATEAI IS NOT EQUAL TO SPACES THEN
+           IF EDATEAL IS GREATER THAN ZERO THEN
               MOVE FUNCTION TRIM(EDATEAI) TO LST-EMPL-DATE-AFTER
-              SET LST-FILTERS-SET TO TRUE
            END-IF.
 
-           IF EDATEBI IS NOT EQUAL TO LOW-VALUES AND
-              EDATEBI IS NOT EQUAL TO SPACES THEN
+           IF EDATEBL IS GREATER THAN ZERO THEN
               MOVE FUNCTION TRIM(EDATEBI) TO LST-EMPL-DATE-BEFORE
+           END-IF.
+
+           IF LST-SELECT-KEY-VALUE IS GREATER THAN SPACES OR
+              LST-INCLUDE-DEPT-FILTERS IS GREATER THAN SPACES OR
+              LST-EXCLUDE-DEPT-FILTERS IS GREATER THAN SPACES OR
+              LST-EMPLOYMENT-DATE-FILTERS IS GREATER THAN SPACES THEN
+      *       IF *ANY* FILTER CRITERIA WERE SET, SET FLAG TO TRUE.
               SET LST-FILTERS-SET TO TRUE
+           ELSE
+              SET LST-NO-FILTERS-SET TO TRUE
            END-IF.
 
       *    >>> DEBUGGING ONLY <<<
@@ -910,7 +1033,7 @@
 
       *    IF NO FILTERS WERE SET, THEN WE JUST 'OK' THE RECORD.
            IF LST-NO-FILTERS-SET THEN
-              SET WS-FILTERS-PASSED TO TRUE
+              SET FILTERS-PASSED TO TRUE
               EXIT PARAGRAPH
            END-IF.
 
@@ -920,10 +1043,10 @@
            PERFORM 3500-APPLY-DATE-FILTERS.
 
       *    IF *ALL* FILTERS WERE MET, THEN WE SET THE 'PASSED' FLAG.
-           IF WS-KEY-FILTER-PASSED AND
-              WS-DEPT-FILTER-PASSED AND
-              WS-DATE-FILTER-PASSED THEN
-              SET WS-FILTERS-PASSED TO TRUE
+           IF KEY-FILTER-PASSED AND
+              DEPT-FILTER-PASSED AND
+              DATE-FILTER-PASSED THEN
+              SET FILTERS-PASSED TO TRUE
            END-IF.
 
        3300-APPLY-KEY-FILTERS.
@@ -934,7 +1057,7 @@
 
       *    IF 'VALUE' WAS OMITTED, WE IGNORE THE FILTER.
            IF LST-SELECT-KEY-VALUE IS EQUAL TO SPACES THEN
-              SET WS-KEY-FILTER-PASSED TO TRUE
+              SET KEY-FILTER-PASSED TO TRUE
               EXIT PARAGRAPH
            END-IF.
 
@@ -960,7 +1083,7 @@
                  FOR ALL FUNCTION TRIM(LST-SELECT-KEY-VALUE)
 
               IF WS-INSP-COUNTER IS GREATER THAN ZERO THEN
-                 SET WS-KEY-FILTER-PASSED TO TRUE
+                 SET KEY-FILTER-PASSED TO TRUE
               END-IF
            END-IF.
 
@@ -973,7 +1096,7 @@
                  FOR ALL FUNCTION TRIM(LST-SELECT-KEY-VALUE)
 
               IF WS-INSP-COUNTER IS GREATER THAN ZERO THEN
-                 SET WS-KEY-FILTER-PASSED TO TRUE
+                 SET KEY-FILTER-PASSED TO TRUE
               END-IF
            END-IF.
 
@@ -986,7 +1109,7 @@
       *    IF NO DEPARTMENT FILTERS WERE SET, WE JUST 'OK' IT.
            IF LST-INCLUDE-DEPT-FILTERS IS EQUAL TO SPACES AND
               LST-EXCLUDE-DEPT-FILTERS IS EQUAL TO SPACES THEN
-              SET WS-DEPT-FILTER-PASSED TO TRUE
+              SET DEPT-FILTER-PASSED TO TRUE
               EXIT PARAGRAPH
            END-IF.
 
@@ -996,13 +1119,13 @@
       *    FIRST, THE 'POSITIVE' DEPARTMENT INCLUSION FILTERS.
            IF LST-INCLUDE-DEPT-FILTERS IS EQUAL TO SPACES THEN
       *       NO 'INCLUDE' FILTERS, SO *ALL* DEPARTMENTS ARE FINE.
-              SET WS-DEPT-FILTER-PASSED TO TRUE
+              SET DEPT-FILTER-PASSED TO TRUE
            ELSE
       *       WE NEED TO MATCH A 'WHITE-LISTED' DEPARTMENT TO PASS.
               PERFORM VARYING LST-IN-DEPT-INDEX
                  FROM 1 BY 1
                  UNTIL LST-IN-DEPT-INDEX IS GREATER THAN 4
-                 OR WS-DEPT-FILTER-PASSED
+                 OR DEPT-FILTER-PASSED
                       IF LST-INCL-DEPT-ID(LST-IN-DEPT-INDEX)
                          IS NOT EQUAL TO SPACES THEN
 
@@ -1015,7 +1138,7 @@
 
                          IF WS-INSP-COUNTER IS GREATER THAN ZERO THEN
       *                     SUCCESS! IT PASSES THE FILTER.
-                            SET WS-DEPT-FILTER-PASSED TO TRUE
+                            SET DEPT-FILTER-PASSED TO TRUE
                          END-IF
                       END-IF
               END-PERFORM
@@ -1031,7 +1154,7 @@
               PERFORM VARYING LST-EX-DEPT-INDEX
                  FROM 1 BY 1
                  UNTIL LST-EX-DEPT-INDEX IS GREATER THAN 4
-                 OR WS-DEPT-FILTER-FAILED
+                 OR DEPT-FILTER-FAILED
                       IF LST-EXCL-DEPT-ID(LST-EX-DEPT-INDEX)
                          IS NOT EQUAL TO SPACES THEN
 
@@ -1044,7 +1167,7 @@
 
                          IF WS-INSP-COUNTER IS GREATER THAN ZERO THEN
       *                     BLACKLISTED! IT DOESN'T MAKE THE CUT.
-                            SET WS-DEPT-FILTER-FAILED TO TRUE
+                            SET DEPT-FILTER-FAILED TO TRUE
                          END-IF
                       END-IF
               END-PERFORM
@@ -1058,7 +1181,7 @@
 
       *    IF NO DATE FILTERS WERE SET, WE JUST 'OK' IT AND RETURN
            IF LST-EMPLOYMENT-DATE-FILTERS IS EQUAL TO SPACES THEN
-              SET WS-DATE-FILTER-PASSED TO TRUE
+              SET DATE-FILTER-PASSED TO TRUE
               EXIT PARAGRAPH
            END-IF.
 
@@ -1071,7 +1194,7 @@
               IF EMP-START-DATE IS GREATER THAN LST-EMPL-DATE-AFTER AND
                  EMP-START-DATE IS LESS THAN LST-EMPL-DATE-BEFORE THEN
       *          SUCCESS!
-                 SET WS-DATE-FILTER-PASSED TO TRUE
+                 SET DATE-FILTER-PASSED TO TRUE
                  EXIT PARAGRAPH
               END-IF
            END-IF.
@@ -1080,7 +1203,7 @@
            IF LST-EMPL-DATE-AFTER IS EQUAL TO SPACES THEN
               IF EMP-START-DATE IS LESS THAN LST-EMPL-DATE-BEFORE THEN
       *          SUCCESS!
-                 SET WS-DATE-FILTER-PASSED TO TRUE
+                 SET DATE-FILTER-PASSED TO TRUE
                  EXIT PARAGRAPH
               END-IF
            END-IF.
@@ -1089,7 +1212,7 @@
            IF LST-EMPL-DATE-BEFORE IS EQUAL TO SPACES THEN
               IF EMP-START-DATE IS GREATER THAN LST-EMPL-DATE-AFTER THEN
       *          SUCCESS!
-                 SET WS-DATE-FILTER-PASSED TO TRUE
+                 SET DATE-FILTER-PASSED TO TRUE
                  EXIT PARAGRAPH
               END-IF
            END-IF.
@@ -1144,6 +1267,22 @@
            MOVE WS-FILTERS-MSG-EF TO MESSFLO.
            MOVE DFHTURQ TO MESSFLC.
 
+       3700-CHECK-DELETION.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '3700-CHECK-DELETION' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+      *    FILTER 'LOGICALLY DELETED' RECORDS FROM STANDARD USERS, BUT
+      *    ALLOW MANAGERS AND ADMINISTRATORS TO SEE THEM.
+
+           IF LST-CT-MANAGER OR LST-CT-ADMINISTRATOR THEN
+              EXIT PARAGRAPH
+           END-IF.
+
+           IF EMP-DELETED THEN
+              SET FILTERS-FAILED TO TRUE
+           END-IF.
 
       *-----------------------------------------------------------------
        ACTIVITY-MONITOR SECTION.
@@ -1162,7 +1301,6 @@
            SET MON-AC-APP-FUNCTION TO TRUE.
            PERFORM 4200-CALL-ACTIVITY-MONITOR.
 
-
        4100-GET-MONITOR-CONTAINER.
       *    >>> DEBUGGING ONLY <<<
            MOVE '4100-GET-MONITOR-CONTAINER' TO WS-DEBUG-AID.
@@ -1180,7 +1318,8 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 CONTINUE
-           WHEN DFHRESP(NOTFND)
+           WHEN DFHRESP(CHANNELERR)
+           WHEN DFHRESP(CONTAINERERR)
                 MOVE 'No Activity Monitor Data Found!' TO WS-MESSAGE
       *         PERFORM 9000-SEND-MAP-AND-RETURN
            WHEN OTHER
@@ -1210,6 +1349,8 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 CONTINUE
+           WHEN DFHRESP(PGMIDERR)
+                MOVE 'Activity Monitor Program Not Found!' TO WS-MESSAGE
            WHEN OTHER
                 MOVE 'Error Linking to Activity Monitor!' TO WS-MESSAGE
                 PERFORM 9000-SEND-MAP-AND-RETURN
@@ -1238,6 +1379,25 @@
            END-EVALUATE.
 
       *-----------------------------------------------------------------
+       RE-ENTRY SECTION.
+      *-----------------------------------------------------------------
+
+       5000-RE-ENTRY-FROM-VIEW.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '5000-RE-ENTRY-FROM-VIEW' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+      *    SAVE FILTERS SENT BACK FROM THE VIEW DETAILS SCREEN AND SET
+      *    THE RE-ENTRY FLAG SO THEY WILL BE RECALLED ON THE NEXT
+      *    RENDERING OF THE FILTERS PAGE.
+           MOVE LST-FILTERS TO WS-RE-ENTRY-FILTERS.
+           SET RE-ENTRY-FROM-VIEW TO TRUE.
+
+      *    OTHERWISE, WE JUST RESTART THE LISTING CONVERSATION.
+           PERFORM 1000-FIRST-INTERACTION.
+
+      *-----------------------------------------------------------------
        EXIT-ROUTE SECTION.
       *-----------------------------------------------------------------
 
@@ -1253,20 +1413,7 @@
       *      - RETURN TO CICS.
 
            PERFORM 9100-POPULATE-MAP.
-
-           EXEC CICS PUT
-                CONTAINER(APP-LIST-CONTAINER-NAME)
-                CHANNEL(APP-LIST-CHANNEL-NAME)
-                FROM (LIST-EMPLOYEE-CONTAINER)
-                RESP(WS-CICS-RESPONSE)
-                END-EXEC.
-
-           EVALUATE WS-CICS-RESPONSE
-           WHEN DFHRESP(NORMAL)
-                CONTINUE
-           WHEN OTHER
-                MOVE 'Error Putting Container!' TO WS-MESSAGE
-           END-EVALUATE.
+           PERFORM 9150-PUT-LIST-CONTAINER.
 
            EXEC CICS SEND
                 MAP(APP-LIST-MAP-NAME)
@@ -1278,7 +1425,7 @@
 
            EXEC CICS RETURN
                 CHANNEL(APP-LIST-CHANNEL-NAME)
-                TRANSID(EIBTRNID)
+                TRANSID(APP-LIST-TRANSACTION-ID)
                 END-EXEC.
 
        9100-POPULATE-MAP.
@@ -1293,8 +1440,15 @@
            MOVE EIBTRNID TO TRANIDO.
            MOVE LST-CURRENT-PAGE-NUMBER TO PAGENO.
 
+      *    DISPLAY CURRENTLY LOGGED-IN USER, IF ANY.
+           IF MON-USER-ID IS NOT EQUAL TO SPACES THEN
+              MOVE MON-USER-ID TO LOGDINO
+           ELSE
+              MOVE '<Anonym>' TO LOGDINO
+           END-IF.
+
       *    DISPLAY FILTERS LINE.
-           PERFORM 9150-SET-FILTERS-LINE.
+           PERFORM 9110-SET-FILTERS-LINE.
 
       *    POPULATE THE ALL-IMPORTANT MESSAGE LINE!
            MOVE WS-MESSAGE TO MESSO.
@@ -1302,13 +1456,13 @@
 
       *    CHANGE COLOR OF MESSAGE LINE BASED ON TYPE/CONTENT.
            EVALUATE TRUE
-           WHEN WS-MESSAGE(1:5) IS EQUAL TO 'Error'
+           WHEN MESSO(1:5) IS EQUAL TO 'Error'
                 MOVE DFHRED TO MESSC
-           WHEN WS-MESSAGE(1:3) IS EQUAL TO 'No '
+           WHEN MESSO(1:3) IS EQUAL TO 'No '
                 MOVE DFHYELLO TO MESSC
-           WHEN WS-MESSAGE(1:7) IS EQUAL TO 'Invalid'
+           WHEN MESSO(1:7) IS EQUAL TO 'Invalid'
                 MOVE DFHPINK TO MESSC
-           END-EVALUATE
+           END-EVALUATE.
 
       *    POPULATE THE NAVIGATION FUNCTION KEY LABELS.
            IF LST-CURRENT-PAGE-NUMBER IS GREATER THAN 1 THEN
@@ -1337,9 +1491,12 @@
                    MOVE EMP-DEPARTMENT-ID TO DPTIDO(LINEO-INDEX)
            END-PERFORM.
 
-       9150-SET-FILTERS-LINE.
+      *    SET ANY MODIFIED DATA TAG (MDT) 'ON' TO AVOID 'AEI9' ABEND.
+           MOVE DFHBMFSE TO TRANIDA.
+
+       9110-SET-FILTERS-LINE.
       *    >>> DEBUGGING ONLY <<<
-           MOVE '9150-SET-FILTERS-LINE' TO WS-DEBUG-AID.
+           MOVE '9110-SET-FILTERS-LINE' TO WS-DEBUG-AID.
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
@@ -1383,6 +1540,26 @@
            END-IF.
 
            MOVE WS-FILTERS-BANNER TO FLTRSO.
+
+       9150-PUT-LIST-CONTAINER.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '9150-PUT-LIST-CONTAINER' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+           EXEC CICS PUT
+                CONTAINER(APP-LIST-CONTAINER-NAME)
+                CHANNEL(APP-LIST-CHANNEL-NAME)
+                FROM (LIST-EMPLOYEE-CONTAINER)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                CONTINUE
+           WHEN OTHER
+                MOVE 'Error Putting List Container!' TO WS-MESSAGE
+           END-EVALUATE.
 
        9200-RETURN-TO-CICS.
       *    >>> DEBUGGING ONLY <<<

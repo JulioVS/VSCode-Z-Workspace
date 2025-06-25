@@ -1,6 +1,6 @@
       ******************************************************************
       *   CICS PLURALSIGHT 'EMPLOYEE APP ' - EMPLOYEE LIST.
-      *      - RECORD LAYOUT FOR 'ELSTCTR' CONTAINER.
+      *      - LAYOUT FOR 'ELSTCTR' CONTAINER.
       *      - NON-PERSISTENT (NO ASSOCIATED FILE).
       ******************************************************************
        01 LIST-EMPLOYEE-CONTAINER.
@@ -11,6 +11,7 @@
              88 LST-CT-NOT-SET                     VALUE SPACES.
           05 LST-PROGRAM-NAME           PIC X(8).
           05 LST-CURRENT-PAGE-NUMBER    PIC 9(6).
+          05 LST-SELECT-LINE-NUMBER     PIC 9(2).
       *
           05 LST-FILE-FLAG              PIC X(1)   VALUE SPACES.
              88 LST-TOP-OF-FILE                    VALUE 'T'.

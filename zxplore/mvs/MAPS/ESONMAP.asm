@@ -30,10 +30,13 @@ TRANID   DFHMDF POS=(1,1),                                             X
                LENGTH=28,                                              X
                ATTRB=(ASKIP,NORM),                                     X
                INITIAL='Employee Application Sign On'
+*
+LOGDIN   DFHMDF POS=(2,69),LENGTH=8,ATTRB=(ASKIP,NORM)
+*
          DFHMDF POS=(3,1),                                             X
                LENGTH=66,                                              X
                ATTRB=(ASKIP,NORM),                                     X
-               INITIAL='Please enter your Employee Application User Id X
+               INITIAL='Please enter your Employee Application User ID X
                and Password below.'
 *
 *  DETAIL SECTION.
@@ -41,7 +44,7 @@ TRANID   DFHMDF POS=(1,1),                                             X
          DFHMDF POS=(5,20),                                            X
                LENGTH=8,                                               X
                ATTRB=(ASKIP,NORM),                                     X
-               INITIAL='User Id:'
+               INITIAL='User ID:'
 USERID   DFHMDF POS=(5,29),                                            X
                LENGTH=8,                                               X
                ATTRB=(UNPROT,BRT,IC),                                  X
@@ -55,7 +58,6 @@ PASSWD   DFHMDF POS=(5,53),                                            X
                LENGTH=8,                                               X
                ATTRB=(UNPROT,DRK),                                     X
                HILIGHT=UNDERLINE
-*
          DFHMDF POS=(5,62),                                            X
                LENGTH=0
 *
@@ -63,7 +65,7 @@ PASSWD   DFHMDF POS=(5,53),                                            X
 *
 MESS     DFHMDF POS=(7,1),                                             X
                LENGTH=79,                                              X
-               ATTRB=(ASKIP,NORM)
+               ATTRB=(ASKIP,BRT)
 *
 *  AID KEY SECTION.
 *

@@ -31,6 +31,9 @@ TRANID   DFHMDF POS=(1,1),LENGTH=4,ATTRB=(ASKIP,NORM)
                INITIAL='Page'
 PAGEN    DFHMDF POS=(1,74),ATTRB=(ASKIP,NORM),PICOUT='ZZZZZ9'
 *
+LOGDIN   DFHMDF POS=(2,69),LENGTH=8,ATTRB=(ASKIP,NORM)
+*
+*
 *  FILTER SECTION.
 *
          DFHMDF POS=(3,1),LENGTH=9, ATTRB=(ASKIP,NORM),                X
@@ -40,9 +43,9 @@ FLTRS    DFHMDF POS=(3,11),LENGTH=69,ATTRB=(ASKIP,NORM)
 *  COLUMN HEADINGS.
 *
          DFHMDF POS=(5,1),LENGTH=39,ATTRB=(ASKIP,BRT),                 X
-               INITIAL='  Emp Id   Primary Name                 '
+               INITIAL='  Emp ID   Primary Name                 '
          DFHMDF POS=(5,41),LENGTH=39,ATTRB=(ASKIP,BRT),                X
-               INITIAL=' Job Title                     Dept Id'
+               INITIAL=' Job Title                     Dept ID'
 *
 *  DETAIL SECTION.
 *
@@ -145,7 +148,7 @@ DPTID16  DFHMDF POS=(21,72),LENGTH=8,ATTRB=(ASKIP,NORM)
 *
 *  MESSAGE SECTION.
 *
-MESS     DFHMDF POS=(23,1),LENGTH=79,ATTRB=(ASKIP,NORM)
+MESS     DFHMDF POS=(23,1),LENGTH=79,ATTRB=(ASKIP,BRT)
 *
 *  AID KEY SECTION.
 *
@@ -164,18 +167,21 @@ EFILM    DFHMDI SIZE=(24,80),LINE=1,COLUMN=1
 *
 *  HEADING SECTION.
 *
-TRANFL   DFHMDF POS=(1,1),LENGTH=4,ATTRB=(ASKIP,BRT),COLOR=TURQUOISE
-         DFHMDF POS=(1,31),LENGTH=18,ATTRB=(ASKIP,BRT),                X
+TRANFL   DFHMDF POS=(1,1),LENGTH=4,ATTRB=(ASKIP,NORM),COLOR=TURQUOISE
+         DFHMDF POS=(1,31),LENGTH=18,ATTRB=(ASKIP,NORM),               X
                INITIAL='Enter/Edit Filters',COLOR=TURQUOISE
+*
+LOGDFL   DFHMDF POS=(2,69),LENGTH=8,ATTRB=(ASKIP,NORM)
 *
 *  SELECT/ORDER SECTION.
 *
-         DFHMDF POS=(3,1),LENGTH=15,ATTRB=(ASKIP,BRT),COLOR=TURQUOISE, X
-               INITIAL='Select/Order By'
+         DFHMDF POS=(3,1),LENGTH=15,ATTRB=(ASKIP,NORM),                X
+               COLOR=TURQUOISE,INITIAL='Select/Order By'
 KEYSEL   DFHMDF POS=(3,17),LENGTH=1,ATTRB=(UNPROT,BRT,IC),             X
                INITIAL='1',HILIGHT=UNDERLINE,COLOR=YELLOW
+*
          DFHMDF POS=(3,19),LENGTH=25,ATTRB=(ASKIP,NORM),               X
-               INITIAL='1 Employee Id    Matching'
+               INITIAL='1 Employee ID    Matching'
 MATCH    DFHMDF POS=(3,45),LENGTH=30,ATTRB=(UNPROT,BRT),COLOR=YELLOW,  X
                HILIGHT=UNDERLINE
          DFHMDF POS=(3,76),LENGTH=0
@@ -188,7 +194,7 @@ MATCH    DFHMDF POS=(3,45),LENGTH=30,ATTRB=(UNPROT,BRT),COLOR=YELLOW,  X
                INITIAL='Filters'
 *
          DFHMDF POS=(8,8),LENGTH=25,ATTRB=(ASKIP,NORM),                X
-               INITIAL='Department Id     Include'
+               INITIAL='Department ID     Include'
 DPTINCL  DFHMDF POS=(8,34),LENGTH=8,ATTRB=(UNPROT,BRT),OCCURS=4,       X
                HILIGHT=UNDERLINE,COLOR=YELLOW
          DFHMDF POS=(8,70),LENGTH=0

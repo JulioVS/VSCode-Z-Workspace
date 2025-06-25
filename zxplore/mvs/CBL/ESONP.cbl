@@ -25,45 +25,46 @@
       *   DEFINE MY SESSION STATE DATA FOR PASSING INTO COMM-AREA.
       ******************************************************************
        01 WS-SESSION-STATE.
-          05 WS-USER-ID           PIC X(8).
-          05 WS-USER-PASSWORD     PIC X(8).
+          05 WS-USER-ID         PIC X(8).
+          05 WS-USER-PASSWORD   PIC X(8).
       ******************************************************************
       *   DEFINE MY WORKING VARIABLES.
       ******************************************************************
        01 WS-WORKING-VARS.
-          05 WS-CICS-RESPONSE     PIC S9(8) USAGE IS BINARY.
-          05 WS-CURRENT-DATE      PIC X(14).
+          05 WS-CICS-RESPONSE   PIC S9(8) USAGE IS BINARY.
+          05 WS-CURRENT-DATE    PIC X(14).
+          05 WS-MSG             PIC X(79).
       *
-          05 WS-USER-LOOKUP       PIC X(1)  VALUE SPACES.
-             88 WS-USER-FOUND               VALUE 'Y'.
-          05 WS-LOGIN-OUTCOME     PIC X(1)  VALUE SPACES.
-             88 WS-LOGIN-SUCCESS            VALUE 'Y'.
+          05 WS-USER-LOOKUP     PIC X(1)  VALUE SPACES.
+             88 USER-FOUND                VALUE 'Y'.
+          05 WS-LOGIN-OUTCOME   PIC X(1)  VALUE SPACES.
+             88 LOGIN-SUCCESS             VALUE 'Y'.
       *
-       01 WS-DEBUG-AID            PIC X(45) VALUE SPACES.
+       01 WS-DEBUG-AID          PIC X(45) VALUE SPACES.
       *
        01 WS-DEBUG-MESSAGE.
-          05 FILLER               PIC X(5)  VALUE '<DBG:'.
-          05 WS-DEBUG-TEXT        PIC X(30) VALUE SPACES.
-          05 FILLER               PIC X(1)  VALUE '>'.
-          05 FILLER               PIC X(5)  VALUE '<MSG:'.
-          05 WS-MESSAGE           PIC X(9)  VALUE SPACES.
-          05 FILLER               PIC X(1)  VALUE '>'.
-          05 FILLER               PIC X(5)  VALUE '<EB1='.
-          05 WS-DEBUG-EIBRESP     PIC 9(8)  VALUE ZEROES.
-          05 FILLER               PIC X(1)  VALUE '>'.
-          05 FILLER               PIC X(5)  VALUE '<EB2='.
-          05 WS-DEBUG-EIBRESP2    PIC 9(8)  VALUE ZEROES.
-          05 FILLER               PIC X(1)  VALUE '>'.
+          05 FILLER             PIC X(5)  VALUE '<DBG:'.
+          05 WS-DEBUG-TEXT      PIC X(30) VALUE SPACES.
+          05 FILLER             PIC X(1)  VALUE '>'.
+          05 FILLER             PIC X(5)  VALUE '<MSG:'.
+          05 WS-MESSAGE         PIC X(9)  VALUE SPACES.
+          05 FILLER             PIC X(1)  VALUE '>'.
+          05 FILLER             PIC X(5)  VALUE '<EB1='.
+          05 WS-DEBUG-EIBRESP   PIC 9(8)  VALUE ZEROES.
+          05 FILLER             PIC X(1)  VALUE '>'.
+          05 FILLER             PIC X(5)  VALUE '<EB2='.
+          05 WS-DEBUG-EIBRESP2  PIC 9(8)  VALUE ZEROES.
+          05 FILLER             PIC X(1)  VALUE '>'.
       *
-       01 WS-DEBUG-MODE           PIC X(1)  VALUE SPACES.
-          88 I-AM-DEBUGGING                 VALUE 'Y'.
-          88 NOT-DEBUGGING                  VALUE SPACES.
+       01 WS-DEBUG-MODE         PIC X(1)  VALUE 'N'.
+          88 I-AM-DEBUGGING               VALUE 'Y'.
+          88 NOT-DEBUGGING                VALUE 'N'.
 
       ******************************************************************
       *   EXPLICITLY DEFINE THE COMM-AREA FOR THE TRASACTION.
       ******************************************************************
        LINKAGE SECTION.
-       01 DFHCOMMAREA             PIC X(16).
+       01 DFHCOMMAREA           PIC X(16).
 
        PROCEDURE DIVISION.
       *-----------------------------------------------------------------
@@ -72,7 +73,6 @@
 
       *    >>> DEBUGGING ONLY <<<
            MOVE 'MAIN-LOGIC' TO WS-DEBUG-AID.
-           SET I-AM-DEBUGGING TO TRUE.
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
@@ -111,9 +111,7 @@
            INITIALIZE WS-WORKING-VARS.
            INITIALIZE ESONMO.
 
-      *    FOR THE FIRST INTERACTION, IT SENDS THE EMPY MAP WITH
-      *    JUST THE TRANSACTION ID ON IT (AN ECHO OF A KNOWN VALUE)
-           MOVE EIBTRNID TO TRANIDO.
+           MOVE 'Welcome to the Employee App!' TO WS-MSG.
 
       *-----------------------------------------------------------------
        USE-CASE SECTION.
@@ -128,6 +126,7 @@
       *    THIS IS THE CONTINUATION OF THE CONVERSATION,
       *    MEANING THE SECOND INTERACTION OF THE PROCESS,
       *    HENCE THE COMM-AREA IS NOT EMPTY.
+           MOVE 'So Far, So Good...' TO WS-MSG.
 
       *    RESTORE SESSION DATA INTO WORKING STORAGE
            MOVE DFHCOMMAREA TO WS-SESSION-STATE.
@@ -142,6 +141,7 @@
       *    AND CHECK PRESSED KEY
            EVALUATE EIBAID
            WHEN DFHPF3
+           WHEN DFHPF10
            WHEN DFHPF12
                 PERFORM 2100-CANCEL-SIGN-ON
            WHEN DFHENTER
@@ -149,12 +149,12 @@
                    USERIDI IS EQUAL TO SPACES OR
                    PASSWDI IS EQUAL TO LOW-VALUES OR
                    PASSWDI IS EQUAL TO SPACES THEN
-                   MOVE "Invalid Credentials!" TO MESSO
+                   MOVE "Invalid Credentials!" TO WS-MSG
                 ELSE
                    PERFORM 3000-SIGN-ON-USER
                 END-IF
            WHEN OTHER
-                MOVE "Invalid Key!" TO MESSO
+                MOVE "Invalid Key!" TO WS-MSG
            END-EVALUATE.
 
            PERFORM 9100-SEND-MAP-AND-RETURN.
@@ -173,6 +173,10 @@
            EXEC CICS RETURN
                 END-EXEC.
 
+      *-----------------------------------------------------------------
+       SIGN-ON SECTION.
+      *-----------------------------------------------------------------
+
        3000-SIGN-ON-USER.
       *    >>> DEBUGGING ONLY <<<
            MOVE '3000-SIGN-ON-USER' TO WS-DEBUG-AID.
@@ -182,14 +186,14 @@
            PERFORM 3100-UPDATE-STATE.
            PERFORM 3200-LOOKUP-USER-ID.
 
-           IF WS-USER-FOUND THEN
+           IF USER-FOUND THEN
               PERFORM 3300-CHECK-USER-STATUS
               PERFORM 3400-CHECK-USER-CREDENTIALS
            ELSE
               EXIT
            END-IF.
 
-           IF WS-LOGIN-SUCCESS THEN
+           IF LOGIN-SUCCESS THEN
               PERFORM 3500-NOTIFY-ACTIVITY-MONITOR
               PERFORM 9000-TRANSFER-TO-LANDING-PAGE
            END-IF.
@@ -226,12 +230,13 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                SET WS-USER-FOUND TO TRUE
-                MOVE "User Found!" TO MESSO
+                SET USER-FOUND TO TRUE
+                MOVE "User Found!" TO WS-MSG
            WHEN DFHRESP(NOTFND)
-                MOVE "User Not Found!" TO MESSO
+                MOVE "User Not Found!" TO WS-MSG
            WHEN OTHER
-                MOVE "Error Reading Users File!" TO MESSO
+                MOVE "Error Reading Users File!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
        3300-CHECK-USER-STATUS.
@@ -270,8 +275,12 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 CONTINUE
+           WHEN DFHRESP(PGMIDERR)
+                MOVE "Activity Monitor Program Not Found!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            WHEN OTHER
-                MOVE "Error Linking To Activity Monitor!" TO MESSO
+                MOVE "Error Linking To Activity Monitor!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
        3315-PUT-CONTAINER.
@@ -292,7 +301,8 @@
            WHEN DFHRESP(NORMAL)
                 CONTINUE
            WHEN OTHER
-                MOVE "Error Writing Activity Monitor!" TO MESSO
+                MOVE "Error Writing Activity Monitor!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
        3320-EVALUATE-RESPONSE.
@@ -313,13 +323,17 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 CONTINUE
+           WHEN DFHRESP(CHANNELERR)
+           WHEN DFHRESP(CONTAINERERR)
+                MOVE "No Activity Monitor Data Found!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            WHEN OTHER
-                MOVE "Error Reading Activity Monitor!" TO MESSO
-                EXIT
+                MOVE "Error Reading Activity Monitor!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
       *    RELAY ACTIVITY MONITOR RESPONSE MESSAGE TO USER TERMINAL
-           MOVE MON-MESSAGE TO MESSO.
+           MOVE MON-MESSAGE TO WS-MSG.
 
       *    SEE IF IT RESULTED IN SUCCESS, FAIL, NEUTRAL OR ERROR.
            EVALUATE TRUE
@@ -335,7 +349,8 @@
       *         ON NEUTRAL, CONTINUE TO CHECK USER CREDENTIALS
                 CONTINUE
            WHEN OTHER
-                MOVE "Unknown Response From Activity Monitor!" TO MESSO
+                MOVE "Unknown Response From Activity Monitor!" TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
        3400-CHECK-USER-CREDENTIALS.
@@ -354,16 +369,16 @@
                  IF WS-CURRENT-DATE >= REG-LAST-EFFECTIVE-DATE THEN
       *             ALL CONDITIONS MET
       *             SUCCESFUL SIGN ON!
-                    SET WS-LOGIN-SUCCESS TO TRUE
-                    MOVE "User Is Active!" TO MESSO
+                    SET LOGIN-SUCCESS TO TRUE
+                    MOVE "User Is Active!" TO WS-MSG
                  ELSE
-                    MOVE "User Is Not Yet Active!" TO MESSO
+                    MOVE "User Is Not Yet Active!" TO WS-MSG
                  END-IF
               ELSE
-                 MOVE "User Is Inactive!" TO MESSO
+                 MOVE "User Is Inactive!" TO WS-MSG
               END-IF
            ELSE
-              MOVE "Invalid Password!" TO MESSO
+              MOVE "Invalid Password!" TO WS-MSG
            END-IF.
 
        3500-NOTIFY-ACTIVITY-MONITOR.
@@ -392,47 +407,25 @@
            PERFORM 3315-PUT-CONTAINER.
 
       *    'XCTL' CALLS THE PROGRAM BUT DOES *NOT* RETURN AFTERWARDS!
-      *    EXEC CICS XCTL
-      *         PROGRAM(APP-LANDING-PROGRAM-NAME)
-      *         CHANNEL(APP-ACTMON-CHANNEL-NAME)
-      *         RESP(WS-CICS-RESPONSE)
-      *         END-EXEC.
-
-      *    >>> ------------------------------------------------- <<<
-      *    AGAIN, I COULD *NOT* MAKE PLURALSIGHT'S EXAMPLE WORK!
-      *    SO I AM USING A 'START' CALL INSTEAD OF 'XCTL'!
-      *
-      *    - THE 'XCTL' CHANGED PROGRAMS BUT NOT THE TRANSACTION ID,
-      *      WHICH MADE IT IMPOSSIBLE FOR THE PSEUDO-CONVERSATIONAL
-      *      PAGINATION TO WORK, SINCE EACH TIME YOU PRESSED A KEY
-      *      THE LOGIC WOULD BOUNCE BACK TO *THIS* PROGRAM AND NOT
-      *      THE EMPLOYEES LISTING ONE!
-      *    - CHANGING THE TRANSACTION ID TO 'ELST' AFTERWARDS THROWED
-      *      AN 'ASRA' ABEND, WHICH I COULD NOT FIGURE OUT HOW TO FIX!
-      *    - THEREFORE THE MOST LOGICAL SOLUTION WAS TO USE A 'START'
-      *      CALL TO THE 'ELST' TRANSACTION PROPER, WHICH WORKED FINE!
-      *    >>> ------------------------------------------------- <<<
-
-      *    INITIATE A NEW LIST EMPLOYEES TRANSACTION!
-           EXEC CICS START
-                TRANSID(APP-LIST-TRANSACTION-ID)
-                CHANNEL(APP-LIST-CHANNEL-NAME)
-                TERMID(EIBTRMID)
+           EXEC CICS XCTL
+                PROGRAM(APP-LANDING-PROGRAM-NAME)
+                CHANNEL(APP-ACTMON-CHANNEL-NAME)
+                RESP(WS-CICS-RESPONSE)
                 END-EXEC.
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                CONTINUE
-           WHEN DFHRESP(TERMIDERR)
-                MOVE "Invalid Terminal ID!" TO MESSO
+                MOVE 'Transferring To Landing Page' TO WS-MSG
+           WHEN DFHRESP(INVREQ)
+                MOVE 'Invalid Request!' TO WS-MSG
+                PERFORM 9100-SEND-MAP-AND-RETURN
+           WHEN DFHRESP(PGMIDERR)
+                MOVE "Landing Page Program Not Found!" TO WS-MSG
                 PERFORM 9100-SEND-MAP-AND-RETURN
            WHEN OTHER
-                MOVE "Error Starting New Transaction!" TO MESSO
+                MOVE "Error Linking To Landing Page!" TO WS-MSG
                 PERFORM 9100-SEND-MAP-AND-RETURN
            END-EVALUATE.
-
-      *    THEN EXIT FROM THIS PROGRAM!
-           PERFORM 9200-RETURN-TO-CICS.
 
        9100-SEND-MAP-AND-RETURN.
       *    >>> DEBUGGING ONLY <<<
@@ -440,9 +433,23 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-      *    CHANGE COLOR OF MESSAGE BASED ON TYPE/CONTENT.
+           INITIALIZE ESONMO.
+
+      *    DISPLAY TRANSACTION ID.
+           MOVE EIBTRNID TO TRANIDO.
+
+      *    DISPLAY CURRENTLY LOGGED-IN USER, IF ANY.
+           IF MON-USER-ID IS NOT EQUAL TO SPACES THEN
+              MOVE MON-USER-ID TO LOGDINO
+           ELSE
+              MOVE '<Anonym>' TO LOGDINO
+           END-IF.
+
+      *    DISPLAY MESSAGE TO USER.
+           MOVE WS-MSG TO MESSO.
            MOVE DFHTURQ TO MESSC.
 
+      *    CHANGE COLOR OF MESSAGE BASED ON TYPE/CONTENT.
            EVALUATE TRUE
            WHEN MESSO(1:5) IS EQUAL TO 'Error'
            WHEN MESSO(1:7) IS EQUAL TO 'Invalid'
@@ -466,25 +473,7 @@
       *    AND ENDING THIS STEP OF THE CONVERSATION.
            EXEC CICS RETURN
                 COMMAREA(WS-SESSION-STATE)
-                TRANSID(EIBTRNID)
-                END-EXEC.
-
-       9200-RETURN-TO-CICS.
-      *    >>> DEBUGGING ONLY <<<
-           MOVE '9200-RETURN-TO-CICS' TO WS-DEBUG-AID.
-           PERFORM 9300-DEBUG-AID.
-      *    >>> -------------- <<<
-
-      *    STRANGELY, WE WIPE THE USER'S SCREEN FROM HERE!
-      *    (VIA AN INHERITED TERMINAL CONNECTION)
-           EXEC CICS SEND CONTROL
-                ERASE
-                FREEKB
-                TERMINAL
-                END-EXEC.
-
-      *    RETURN TO CICS - END OF PROCESSING.
-           EXEC CICS RETURN
+                TRANSID(APP-SIGNON-TRANSACTION-ID)
                 END-EXEC.
 
        9300-DEBUG-AID.
@@ -493,7 +482,7 @@
               INITIALIZE WS-DEBUG-MESSAGE
 
               MOVE WS-DEBUG-AID TO WS-DEBUG-TEXT
-              MOVE MESSO TO WS-MESSAGE
+              MOVE WS-MSG TO WS-MESSAGE
               MOVE EIBRESP TO WS-DEBUG-EIBRESP
               MOVE EIBRESP2 TO WS-DEBUG-EIBRESP2
 

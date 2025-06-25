@@ -27,8 +27,12 @@
           05 APP-ACTMON-QUEUE-PREFIX    PIC X(8)  VALUE 'EUSERACT'.
           05 APP-ACTMON-ITEM-NUM        PIC S9(4)
                 USAGE IS BINARY                   VALUE +1.
+      *
       *      LANDING PAGE (ENTRY POINT)
-          05 APP-LANDING-PROGRAM-NAME   PIC X(8)  VALUE 'ELISTP'.
+      * ---------------------------------------------------------------
+          05 APP-LANDING-PROGRAM-NAME   PIC X(8)  VALUE 'EMENUP'.
+      * ---------------------------------------------------------------
+      *
       *      LIST EMPLOYEES
           05 APP-LIST-TRANSACTION-ID    PIC X(4)  VALUE 'ELST'.
           05 APP-LIST-PROGRAM-NAME      PIC X(8)  VALUE 'ELISTP'.
@@ -37,13 +41,32 @@
           05 APP-LIST-CONTAINER-NAME    PIC X(16) VALUE 'LSTContainer'.
           05 APP-LIST-CHANNEL-NAME      PIC X(16) VALUE 'DHFTRANSACTION'
            .
-      *     EMPLOYEE MASTER FILE
+      *      EMPLOYEE MASTER FILE
           05 APP-EMP-MASTER-FILE-NAME   PIC X(8)  VALUE 'EMPMAST'.
           05 APP-EMP-MASTER-PATH-NAME   PIC X(8)  VALUE 'EMPNAME'.
-      *     FILTERS
+      *      FILTERS
           05 APP-FILTERS-MAP-NAME       PIC X(7)  VALUE 'EFILM'.
       *      VIEW EMPLOYEE DETAILS
           05 APP-VIEW-TRANSACTION-ID    PIC X(4)  VALUE 'EDET'.
           05 APP-VIEW-PROGRAM-NAME      PIC X(8)  VALUE 'EVIEWP'.
           05 APP-VIEW-MAPSET-NAME       PIC X(7)  VALUE 'EDETMAP'.
           05 APP-VIEW-MAP-NAME          PIC X(7)  VALUE 'EDETM'.
+          05 APP-VIEW-CONTAINER-NAME    PIC X(16) VALUE 'DETContainer'.
+          05 APP-VIEW-CHANNEL-NAME      PIC X(16) VALUE 'DHFTRANSACTION'
+           .
+      *      MAIN MENU
+          05 APP-MENU-TRANSACTION-ID    PIC X(4)  VALUE 'EMNU'.
+          05 APP-MENU-PROGRAM-NAME      PIC X(8)  VALUE 'EMENUP'.
+          05 APP-MENU-MAPSET-NAME       PIC X(7)  VALUE 'EMNUMAP'.
+          05 APP-MENU-MAP-NAME          PIC X(7)  VALUE 'EMNUM'.
+          05 APP-MENU-CONTAINER-NAME    PIC X(16) VALUE 'MNUContainer'.
+          05 APP-MENU-CHANNEL-NAME      PIC X(16) VALUE 'DHFTRANSACTION'
+           .
+      *      ADD EMPLOYEE
+          05 APP-ADD-TRANSACTION-ID     PIC X(4)  VALUE 'EADD'.
+          05 APP-ADD-PROGRAM-NAME       PIC X(8)  VALUE 'EADDP'.
+          05 APP-ADD-MAPSET-NAME        PIC X(7)  VALUE 'EADDMAP'.
+          05 APP-ADD-MAP-NAME           PIC X(7)  VALUE 'EADDM'.
+          05 APP-ADD-CONTAINER-NAME     PIC X(16) VALUE 'ADDContainer'.
+          05 APP-ADD-CHANNEL-NAME       PIC X(16) VALUE 'DHFTRANSACTION'
+           .
