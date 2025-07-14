@@ -38,8 +38,6 @@
       *
        01 WS-DISPLAY-MESSAGES.
           05 WS-MESSAGE             PIC X(79) VALUE SPACES.
-          05 WS-PF7-LABEL           PIC X(9)  VALUE 'PF7 Prev '.
-          05 WS-PF8-LABEL           PIC X(9)  VALUE 'PF8 Next '.
       *
        01 WS-DATE-FORMATTING.
           05 WS-INPUT-DATE.
@@ -94,7 +92,7 @@
 
       *    PSEUDO-CONVERSATIONAL PROGRAM DESIGN.
 
-      *    START BY GETTING THE DETAIL CONTAINER:
+      *    START BY GETTING THE 'VIEW' (DETAIL) CONTAINER:
       *
       *    - IF IT DOES NOT YET EXIST -> 1ST STEP IN CONVERSATION
       *    - IF IT DOES ALREADY EXIST -> CONVERSATION IN PROGRESS
@@ -113,7 +111,14 @@
                 PERFORM 1000-FIRST-INTERACTION
            WHEN DFHRESP(NORMAL)
       *         NEXT INTERACTIONS -> CONTAINER FOUND (CONTINUE)
-                PERFORM 2000-PROCESS-USER-INPUT
+                IF DET-SAVING-PROGRAM EQUAL TO APP-VIEW-PROGRAM-NAME
+                   PERFORM 2000-PROCESS-USER-INPUT
+                   EXIT
+                END-IF
+      *         IF BOUNCING BACK FROM 'UPDATE', RESTART CONVERSATION
+                IF DET-SAVING-PROGRAM EQUAL TO APP-UPDATE-PROGRAM-NAME
+                   PERFORM 5000-RE-ENTRY-FROM-UPDATE
+                END-IF
            WHEN OTHER
                 MOVE 'Error Retrieving View Container!' TO WS-MESSAGE
            END-EVALUATE.
@@ -168,10 +173,10 @@
       *    CLEAR ALL RECORDS AND VARIABLES.
            INITIALIZE ACTIVITY-MONITOR-CONTAINER.
            INITIALIZE EMPLOYEE-DETAILS-CONTAINER.
-           INITIALIZE EMPLOYEE-MASTER-RECORD.
            INITIALIZE LIST-EMPLOYEE-CONTAINER.
+           INITIALIZE EMPLOYEE-MASTER-RECORD.
+           INITIALIZE REGISTERED-USER-RECORD.
            INITIALIZE WS-WORKING-VARS.
-           INITIALIZE EDETMO.
 
        1200-INITIALIZE-CONTAINER.
       *    >>> DEBUGGING ONLY <<<
@@ -179,11 +184,12 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-      *    SET INITIAL VALUES FOR LIST CONTAINER.
+      *    SET INITIAL VALUES FOR 'DETAILS' CONTAINER.
            MOVE 'ANONYMUS' TO DET-USER-ID.
            MOVE 'STD' TO DET-USER-CATEGORY.
            MOVE '1' TO DET-SELECT-KEY-TYPE.
            MOVE LOW-VALUE TO DET-SELECT-KEY-VALUE.
+           MOVE APP-VIEW-PROGRAM-NAME TO DET-SAVING-PROGRAM.
 
       *    GET CALLING PROGRAM NAME FROM ITS TRANSACTION ID WHILE IT'S
       *    STILL AVAILABLE IN THE EXECUTION INTERFACE BLOCK.
@@ -227,7 +233,7 @@
               SET DET-END-OF-FILE TO TRUE
            END-IF.
       *    >>> -------------- <<<
-Í
+
            PERFORM 1320-READ-NEXT-RECORD
               UNTIL FILTERS-PASSED OR DET-END-OF-FILE.
 
@@ -265,7 +271,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Browsing Employee Master File' TO WS-MESSAGE
+                CONTINUE
            WHEN DFHRESP(NOTFND)
                 MOVE 'No Records Found!' TO WS-MESSAGE
                 SET DET-END-OF-FILE TO TRUE
@@ -308,7 +314,6 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Reading Employee Master File' TO WS-MESSAGE
                 PERFORM 3200-APPLY-FILTERS
                 PERFORM 3700-CHECK-DELETION
            WHEN DFHRESP(NOTFND)
@@ -346,7 +351,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'End of Browsing Master File' TO WS-MESSAGE
+                CONTINUE
            WHEN OTHER
                 MOVE 'Error Ending Browse!' TO WS-MESSAGE
                 PERFORM 9000-SEND-MAP-AND-RETURN
@@ -413,7 +418,6 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Reading Employee Master File' TO WS-MESSAGE
                 PERFORM 3200-APPLY-FILTERS
                 PERFORM 3700-CHECK-DELETION
            WHEN DFHRESP(NOTFND)
@@ -455,7 +459,6 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Reading Employee Master File' TO WS-MESSAGE
                 PERFORM 3200-APPLY-FILTERS
                 PERFORM 3700-CHECK-DELETION
            WHEN DFHRESP(NOTFND)
@@ -484,7 +487,6 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE "User Found!" TO WS-MESSAGE
                 MOVE REG-EMPLOYEE-ID TO DET-USER-EMP-ID
            WHEN DFHRESP(NOTFND)
                 MOVE "User Not Found!" TO WS-MESSAGE
@@ -521,6 +523,8 @@
            WHEN DFHPF3
            WHEN DFHPF12
                 PERFORM 2200-TRANSFER-BACK-TO-CALLER
+           WHEN DFHPF5
+                PERFORM 2600-TRANSFER-TO-UPDATE-PAGE
            WHEN DFHPF7
                 PERFORM 2300-PREV-BY-EMPLOYEE-KEY
            WHEN DFHPF8
@@ -727,7 +731,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Transferring Back To Caller' TO WS-MESSAGE
+                CONTINUE
            WHEN DFHRESP(INVREQ)
                 MOVE 'Invalid Request!' TO WS-MESSAGE
                 PERFORM 9000-SEND-MAP-AND-RETURN
@@ -829,13 +833,33 @@
 
            PERFORM 9200-RETURN-TO-CICS.
 
-      *2600-CANCEL-ACTION.
-      **    >>> DEBUGGING ONLY <<<
-      *    MOVE '2600-CANCEL-ACTION' TO WS-DEBUG-AID.
-      *    PERFORM 9300-DEBUG-AID.
-      **    >>> -------------- <<<
+       2600-TRANSFER-TO-UPDATE-PAGE.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '2600-TRANSFER-TO-UPDATE-PAGE' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
 
-      *    PERFORM 9200-RETURN-TO-CICS.
+           PERFORM 9150-PUT-VIEW-CONTAINER.
+
+           EXEC CICS XCTL
+                PROGRAM(APP-UPDATE-PROGRAM-NAME)
+                CHANNEL(APP-VIEW-CHANNEL-NAME)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                CONTINUE
+           WHEN DFHRESP(INVREQ)
+                MOVE 'Invalid Request!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN DFHRESP(PGMIDERR)
+                MOVE 'Update Program Not Found!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN OTHER
+                MOVE 'Error Transferring To Update Page!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           END-EVALUATE.
 
        2700-SWITCH-DISPLAY-ORDER.
       *    >>> DEBUGGING ONLY <<<
@@ -887,7 +911,7 @@
                 MOVE LST-FILTERS TO DET-FILTERS
 
       *         ALSO UPDATE LIST CONTAINER WITH THIS PROGRAM'S NAME.
-                MOVE APP-VIEW-PROGRAM-NAME TO LST-PROGRAM-NAME
+                MOVE APP-VIEW-PROGRAM-NAME TO LST-SAVING-PROGRAM
                 PERFORM 3100-PUT-LIST-CONTAINER
            WHEN OTHER
                 MOVE 'Error Retrieving List Container!' TO WS-MESSAGE
@@ -1162,7 +1186,7 @@
 
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
-                MOVE 'Activity Monitor Data Found' TO WS-MESSAGE
+                CONTINUE
            WHEN DFHRESP(CHANNELERR)
            WHEN DFHRESP(CONTAINERERR)
                 MOVE 'No Activity Monitor Data Found!' TO WS-MESSAGE
@@ -1220,6 +1244,24 @@
            END-EVALUATE.
 
       *-----------------------------------------------------------------
+       RE-ENTRY SECTION.
+      *-----------------------------------------------------------------
+
+       5000-RE-ENTRY-FROM-UPDATE.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '5000-RE-ENTRY-FROM-UPDATE' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+      *    RESTORE 'VIEW DETAILS' (THIS!) AS THE ACTIVE PROGRAM TO
+      *    PICK UP THE PSEUDO CONVERSATION.
+           MOVE APP-VIEW-PROGRAM-NAME TO DET-SAVING-PROGRAM.
+
+      *    EVERYTHING ELSE WAS ALREADY RECEIVED IN THE CONTAINER,
+      *    SO WE JUST CHILL!
+           CONTINUE.
+
+      *-----------------------------------------------------------------
        EXIT-ROUTE SECTION.
       *-----------------------------------------------------------------
 
@@ -1255,8 +1297,6 @@
            MOVE '9100-POPULATE-MAP' TO WS-DEBUG-AID.
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
-
-           INITIALIZE EDETMO.
 
            MOVE DET-EMPLOYEE-RECORD TO EMPLOYEE-MASTER-RECORD.
 
@@ -1349,7 +1389,8 @@
            END-IF.
 
       *    USER HIMSELF -> SPECIAL GREETING!
-           IF DET-USER-EMP-ID IS EQUAL TO EMP-EMPLOYEE-ID THEN
+           IF DET-USER-EMP-ID IS GREATER THAN ZERO AND
+              DET-USER-EMP-ID IS EQUAL TO EMP-EMPLOYEE-ID THEN
               MOVE 'Hey! This Is Actually You!' TO WS-MESSAGE
            END-IF.
 
@@ -1374,12 +1415,12 @@
       *    AN AID KEY PRESS AND NO MODIFIED DATA ON IT.
            MOVE DFHBMFSE TO EMPLIDA.
 
-      *    ALL USERS -> POPULATE NAVIGATION KEY LABELS.
-           IF NOT DET-TOP-OF-FILE THEN
-              MOVE WS-PF7-LABEL TO HLPPF7O
+      *    ALL USERS -> POPULATE NAVIG   ATION KEY LABELS.
+           IF DET-TOP-OF-FILE THEN
+              MOVE SPACES TO HLPPF7O
            END-IF.
-           IF NOT DET-END-OF-FILE THEN
-              MOVE WS-PF8-LABEL TO HLPPF8O
+           IF DET-END-OF-FILE THEN
+              MOVE SPACES TO HLPPF8O
            END-IF.
 
        9150-PUT-VIEW-CONTAINER.

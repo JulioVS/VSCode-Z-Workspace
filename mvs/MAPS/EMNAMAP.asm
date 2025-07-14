@@ -1,7 +1,7 @@
 * ---------------------------------------------------------------------
 *  CICS PLURALSIGHT 'EMPLOYEE APP'.
-*    - MENU 'S' MAPSET.
-*    - SELECTION VERSION.
+*    - MENU 'A' MAPSET.
+*    - AID KEY VERSION.
 * ---------------------------------------------------------------------
 * ---------------------------------------------------------------------
 *  GLOBAL SETTINGS.
@@ -18,7 +18,7 @@ EMNUMAP  DFHMSD MODE=INOUT,                                            X
 * ---------------------------------------------------------------------
 *  MAIN MENU MAP.
 * ---------------------------------------------------------------------
-EMNUM    DFHMDI SIZE=(24,80),LINE=1,COLUMN=1,COLOR=TURQUOISE
+EMNUM    DFHMDI SIZE=(24,80),LINE=1,COLUMN=1
 *
 *  HEADING SECTION.
 *
@@ -30,20 +30,19 @@ LOGDIN   DFHMDF POS=(2,69),LENGTH=8,ATTRB=(ASKIP,NORM)
 *
 *  DETAIL SECTION.
 *
-         DFHMDF POS=(3,1),LENGTH=10,ATTRB=(ASKIP,NORM),                X
-               INITIAL='Selection:'
-SELECT   DFHMDF POS=(3,12),LENGTH=1,ATTRB=(UNPROT,BRT,IC),             X
-               HILIGHT=UNDERLINE
-         DFHMDF POS=(3,14),LENGTH=0
+         DFHMDF POS=(3,1),LENGTH=79,ATTRB=(ASKIP,NORM),                X
+               INITIAL='Press the PF Key Corresponding to Your SelectioX
+               n'
 *
-         DFHMDF POS=(5,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
-               INITIAL='1 List Employees'
+         DFHMDF POS=(5,8),LENGTH=4,ATTRB=(ASKIP,BRT),                  X
+               INITIAL='PF1 '
+         DFHMDF POS=(5,13),LENGTH=50,ATTRB=(ASKIP,NORM),               X
+               INITIAL='List Employees'
 *
-         DFHMDF POS=(6,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
-               INITIAL='2 View Employee Details'
-*
-ADDEMP   DFHMDF POS=(7,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
-               INITIAL='3 Add Employee'
+         DFHMDF POS=(6,8),LENGTH=4,ATTRB=(ASKIP,BRT),                  X
+               INITIAL='PF2 '
+         DFHMDF POS=(6,13),LENGTH=50,ATTRB=(ASKIP,NORM),               X
+               INITIAL='View Employee Details'
 *
 *  MESSAGE SECTION.
 *

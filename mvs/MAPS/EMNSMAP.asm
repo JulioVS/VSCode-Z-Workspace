@@ -1,7 +1,7 @@
 * ---------------------------------------------------------------------
 *  CICS PLURALSIGHT 'EMPLOYEE APP'.
-*    - MENU 'C' MAPSET.
-*    - CURSOR POSITION VERSION.
+*    - MENU 'S' MAPSET.
+*    - SELECTION VERSION.
 * ---------------------------------------------------------------------
 * ---------------------------------------------------------------------
 *  GLOBAL SETTINGS.
@@ -18,7 +18,7 @@ EMNUMAP  DFHMSD MODE=INOUT,                                            X
 * ---------------------------------------------------------------------
 *  MAIN MENU MAP.
 * ---------------------------------------------------------------------
-EMNUM    DFHMDI SIZE=(24,80),LINE=1,COLUMN=1,COLOR=TURQUOISE
+EMNUM    DFHMDI SIZE=(24,80),LINE=1,COLUMN=1
 *
 *  HEADING SECTION.
 *
@@ -30,19 +30,23 @@ LOGDIN   DFHMDF POS=(2,69),LENGTH=8,ATTRB=(ASKIP,NORM)
 *
 *  DETAIL SECTION.
 *
-         DFHMDF POS=(3,1),LENGTH=79,ATTRB=(ASKIP,NORM),                X
-               INITIAL='Position the Cursor Next to Your Selection and X
-               Press Enter'
-*
-SEL1     DFHMDF POS=(5,8),LENGTH=1,ATTRB=(UNPROT,BRT,IC),              X
+         DFHMDF POS=(3,1),LENGTH=10,ATTRB=(ASKIP,NORM),                X
+               INITIAL='Selection:'
+SELECT   DFHMDF POS=(3,12),LENGTH=1,ATTRB=(UNPROT,BRT,IC),             X
                HILIGHT=UNDERLINE
-         DFHMDF POS=(5,10),LENGTH=50,ATTRB=(ASKIP,NORM),               X
-               INITIAL='List Employees'
+         DFHMDF POS=(3,14),LENGTH=0
 *
-SEL2     DFHMDF POS=(6,8),LENGTH=1,ATTRB=(UNPROT,BRT),                 X
-               HILIGHT=UNDERLINE
-         DFHMDF POS=(6,10),LENGTH=50,ATTRB=(ASKIP,NORM),               X
-               INITIAL='View Employee Details'
+         DFHMDF POS=(5,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
+               INITIAL='1 List Employees'
+*
+         DFHMDF POS=(6,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
+               INITIAL='2 View Employee Details'
+*
+ADDEMP   DFHMDF POS=(7,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
+               INITIAL='3 Add Employee'
+*
+         DFHMDF POS=(8,8),LENGTH=50,ATTRB=(ASKIP,NORM),                X
+               INITIAL='4 Update Employee'
 *
 *  MESSAGE SECTION.
 *

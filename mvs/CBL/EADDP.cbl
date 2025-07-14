@@ -13,6 +13,7 @@
       *      - ADD MAPSET.
       *      - ACTIVITY MONITOR CONTAINER.
       *      - REGISTERED USERS.
+      *      - AUDIT TRAIL RECORD.
       *      - IBM'S AID KEYS.
       *      - IBM'S BMS VALUES.
       ******************************************************************
@@ -22,6 +23,7 @@
        COPY EMPMAST.
        COPY EMONCTR.
        COPY EREGUSR.
+       COPY EAUDIT.
        COPY DFHAID.
        COPY DFHBMSCA.
       ******************************************************************
@@ -83,6 +85,13 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
+      *    PSEUDO-CONVERSATIONAL PROGRAM DESIGN.
+
+      *    START BY GETTING THE 'ADD' CONTAINER:
+      *
+      *    - IF IT DOES NOT YET EXIST -> 1ST STEP IN CONVERSATION
+      *    - IF IT DOES ALREADY EXIST -> CONVERSATION IN PROGRESS
+
            EXEC CICS GET
                 CONTAINER(APP-ADD-CONTAINER-NAME)
                 CHANNEL(APP-ADD-CHANNEL-NAME)
@@ -143,6 +152,7 @@
            INITIALIZE ADD-EMPLOYEE-CONTAINER.
            INITIALIZE EMPLOYEE-MASTER-RECORD.
            INITIALIZE REGISTERED-USER-RECORD.
+           INITIALIZE AUDIT-TRAIL-RECORD.
            INITIALIZE WS-WORKING-VARS.
            INITIALIZE EADDMO.
 
@@ -221,8 +231,6 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-           MOVE 'So Far, So Good...' TO WS-MESSAGE.
-
            EXEC CICS RECEIVE
                 MAP(APP-ADD-MAP-NAME)
                 MAPSET(APP-ADD-MAPSET-NAME)
@@ -244,7 +252,7 @@
            WHEN DFHENTER
                 PERFORM 2100-VALIDATE-USER-INPUT
            WHEN DFHPF3
-                PERFORM 2200-ADD-EMPLOYEE-RECORD
+           WHEN DFHPF12
                 PERFORM 2300-TRANSFER-BACK-TO-MENU
            WHEN DFHPF4
                 PERFORM 2200-ADD-EMPLOYEE-RECORD
@@ -252,8 +260,6 @@
                 PERFORM 2600-CLEAR-SCREEN
            WHEN DFHPF10
                 PERFORM 2500-SIGN-USER-OFF
-           WHEN DFHPF12
-                PERFORM 2300-TRANSFER-BACK-TO-MENU
            WHEN OTHER
                 MOVE 'Invalid Key!' TO WS-MESSAGE
            END-EVALUATE.
@@ -264,7 +270,7 @@
            PERFORM 9300-DEBUG-AID.
       *    >>> -------------- <<<
 
-      *    RESTORE LAST SAVED AND VAILDATED DATA FROM CONTAINER.
+      *    RESTORE LAST SAVED AND VALIDATED DATA FROM CONTAINER.
            MOVE ADD-EMPLOYEE-RECORD TO EMPLOYEE-MASTER-RECORD.
 
       *    GET NEWLY ENTERED FIELDS AND UPDATE THE RECORD.
@@ -353,8 +359,7 @@
            END-IF.
 
       *    IF WE GET THIS FAR, THEN ALL FIELDS ARE VALIDATED!
-           MOVE 'Employee Record Validated Successfully!'
-              TO WS-MESSAGE.
+           MOVE 'Employee Record Validated Successfully!' TO WS-MESSAGE.
            MOVE -1 TO PRNAMEL.
 
            SET VALIDATION-PASSED TO TRUE.
@@ -701,6 +706,8 @@
       *    THEN, CAPITALIZE FIRST LETTER OF EACH FIELD.
            MOVE FUNCTION UPPER-CASE(EMP-FULL-NAME(1:1))
               TO EMP-FULL-NAME(1:1).
+           MOVE FUNCTION UPPER-CASE(EMP-PRIMARY-NAME(1:1))
+              TO EMP-PRIMARY-NAME(1:1).
            MOVE FUNCTION UPPER-CASE(EMP-HONORIFIC(1:1))
               TO EMP-HONORIFIC(1:1).
            MOVE FUNCTION UPPER-CASE(EMP-SHORT-NAME(1:1))
@@ -802,11 +809,6 @@
               ALL '-y' BY '-Y',
               ALL '-z' BY '-Z'.
 
-      *    >>> DEBUGGING ONLY <<<
-           MOVE EMP-DETAILS TO WS-DEBUG-AID.
-           PERFORM 9300-DEBUG-AID.
-      *    >>> -------------- <<<
-
        3200-LOCK-NEW-IDS.
       *    >>> DEBUGGING ONLY <<<
            MOVE '3200-LOCK-NEW-IDS' TO WS-DEBUG-AID.
@@ -858,6 +860,7 @@
            EVALUATE WS-CICS-RESPONSE
            WHEN DFHRESP(NORMAL)
                 MOVE 'New Record Added Successfully!' TO WS-MESSAGE
+                PERFORM 5000-WRITE-AUDIT-TRAIL
            WHEN DFHRESP(DUPREC)
                 MOVE 'Duplicate Employee ID or Primary Name Found!'
                    TO WS-MESSAGE
@@ -997,6 +1000,53 @@
                 CONTINUE
            WHEN OTHER
                 MOVE 'Error Putting Activity Monitor!' TO WS-MESSAGE
+           END-EVALUATE.
+
+      *-----------------------------------------------------------------
+       AUDIT-TRAIL SECTION.
+      *-----------------------------------------------------------------
+
+       5000-WRITE-AUDIT-TRAIL.
+      *    >>> DEBUGGING ONLY <<<
+           MOVE '5000-WRITE-AUDIT-TRAIL' TO WS-DEBUG-AID.
+           PERFORM 9300-DEBUG-AID.
+      *    >>> -------------- <<<
+
+      *    LOAD AUDIT TRAIL WITH:
+      *
+      *      - LOGGED-IN USER'S ID.
+      *      - CURRENT DATE AND TIME.
+      *      - ACTION INDICATOR.
+      *      - NEW EMPLOYEE RECORD.
+
+           MOVE FUNCTION CURRENT-DATE TO AUD-TIMESTAMP.
+           MOVE ADD-USER-ID TO AUD-USER-ID.
+           SET AUD-ACTION-ADD TO TRUE.
+
+           MOVE EMPLOYEE-MASTER-RECORD TO AUD-RECORD-AFTER.
+
+      *    CALL AUDIT TRAIL ASYNC TRANSACTION TO LOG THE ADDITION.
+      *    ('FIRE AND FORGET' STYLE)
+           EXEC CICS START
+                TRANSID(APP-AUDIT-TRANSACTION-ID)
+                TERMID(EIBTRMID)
+                FROM (AUDIT-TRAIL-RECORD)
+                REQID(APP-AUDIT-REQUEST-ID)
+                RESP(WS-CICS-RESPONSE)
+                END-EXEC.
+
+           EVALUATE WS-CICS-RESPONSE
+           WHEN DFHRESP(NORMAL)
+                CONTINUE
+           WHEN DFHRESP(INVREQ)
+                MOVE 'Invalid Request (Audit Trail)!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN DFHRESP(TRANSIDERR)
+                MOVE 'Audit Trail Transaction Not Found!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
+           WHEN OTHER
+                MOVE 'Error Writing Audit Trail!' TO WS-MESSAGE
+                PERFORM 9000-SEND-MAP-AND-RETURN
            END-EVALUATE.
 
       *-----------------------------------------------------------------
