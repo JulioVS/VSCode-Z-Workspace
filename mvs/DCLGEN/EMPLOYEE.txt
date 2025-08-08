@@ -1,0 +1,24 @@
+      ******************************************************************
+      * DCLGEN TABLE(Z45864.EMPLOYEE)                                  *
+      *        LIBRARY(Z45864.DCLGEN(EMPLOYEE))                        *
+      *        LANGUAGE(COBOL)                                         *
+      *        QUOTE                                                   *
+      * ... IS THE DCLGEN COMMAND THAT MADE THE FOLLOWING STATEMENTS   *
+      ******************************************************************
+           EXEC SQL DECLARE Z45864.EMPLOYEE TABLE
+           ( EMP_ID                         INTEGER NOT NULL,
+             FIRST_NAME                     CHAR(15) NOT NULL,
+             LAST_NAME                      CHAR(15) NOT NULL,
+             SALARY                         INTEGER NOT NULL
+           ) END-EXEC.
+      ******************************************************************
+      * COBOL DECLARATION FOR TABLE Z45864.EMPLOYEE                    *
+      ******************************************************************
+       01  DCLEMPLOYEE.
+           10 EMP-ID               PIC S9(9) USAGE COMP-5.
+           10 FIRST-NAME           PIC X(15).
+           10 LAST-NAME            PIC X(15).
+           10 SALARY               PIC S9(9) USAGE COMP-5.
+      ******************************************************************
+      * THE NUMBER OF COLUMNS DESCRIBED BY THIS DECLARATION IS 4       *
+      ******************************************************************
