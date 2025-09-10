@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 input="$1"
 count="$2"
 

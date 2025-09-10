@@ -19,6 +19,7 @@ propertyGroups:
         type: mvs
         locations:
           - 'DFH620.CICS.SDFHPROC'
+          - 'DFSF10.PROCLIB'
           - 'Z45864.PROCLIB'
           - 'VENDOR.PROCLIB'
           - 'SYS1.PROCLIB'
@@ -29,5 +30,6 @@ propertyGroups:
         type: mvs
         locations:
           - 'DFH620.CICS.SDFHMAC'
+          - 'DFSF10.SDFSMAC'
           - 'SYS1.MACLIB'
           
