@@ -9,18 +9,19 @@ propertyGroups:
       - name: syslib
         type: mvs
         locations:
-          - 'DFH620.CICS.SDFHCOB'
           - 'Z45864.COPYLIB'
           - 'Z45864.DCLGEN'
+          - 'DFH620.CICS.SDFHCOB'
   - name: jcl-proclibs
     language: jcl
     libraries:
       - name: proclib
         type: mvs
         locations:
+          - 'Z45864.PROCLIB'
+          - 'Z45864.IMS.PROCLIB'
           - 'DFH620.CICS.SDFHPROC'
           - 'DFSF10.PROCLIB'
-          - 'Z45864.PROCLIB'
           - 'VENDOR.PROCLIB'
           - 'SYS1.PROCLIB'
   - name: hlasm-maclibs

@@ -6,26 +6,32 @@ rm -r mvs
 rm -r uss
 
 # TSO/MVS LIBRARIES (PDS)
-zowe files download am "Z45864.CBL"        -e ".cbl" --po  
-zowe files download am "Z45864.CICS.SYSIN" -e ".txt" --po
-zowe files download am "Z45864.COPYLIB"    -e ".cpy" --po
-zowe files download am "Z45864.DCLGEN"     -e ".txt" --po
-zowe files download am "Z45864.IMS.JCL"    -e ".jcl" --po
-zowe files download am "Z45864.INPUT"      -e ".txt" --po
-zowe files download am "Z45864.JCL"        -e ".jcl" --po
-zowe files download am "Z45864.LAB.DEMO"   -e ".txt" --po
-zowe files download am "Z45864.MAPS"       -e ".asm" --po
-zowe files download am "Z45864.OUTPUT"     -e ".txt" --po
-zowe files download am "Z45864.PROCLIB"    -e ".jcl" --po
-zowe files download am "Z45864.SOURCE"     -e ".txt" --po
-zowe files download am "Z45864.SQL"        -e ".sql" --po
+zowe files download am "Z45864.CBL"         -e ".cbl"  --po  
+zowe files download am "Z45864.CICS.SYSIN"  -e ".txt"  --po
+zowe files download am "Z45864.COPYLIB"     -e ".cpy"  --po
+zowe files download am "Z45864.DCLGEN"      -e ".txt"  --po
+zowe files download am "Z45864.IMS.DBDSRC"  -e ".dbd"  --po
+zowe files download am "Z45864.IMS.DLIIN"   -e ".cntl" --po
+zowe files download am "Z45864.IMS.DLIOUT"  -e ".txt"  --po
+zowe files download am "Z45864.IMS.JCL"     -e ".jcl"  --po
+zowe files download am "Z45864.IMS.PGMSRC"  -e ".cbl"  --po
+zowe files download am "Z45864.IMS.PROCLIB" -e ".jcl"  --po
+zowe files download am "Z45864.IMS.PSBSRC"  -e ".pcb"  --po
+zowe files download am "Z45864.INPUT"       -e ".txt"  --po
+zowe files download am "Z45864.JCL"         -e ".jcl"  --po
+zowe files download am "Z45864.LAB.DEMO"    -e ".txt"  --po
+zowe files download am "Z45864.MAPS"        -e ".asm"  --po
+zowe files download am "Z45864.OUTPUT"      -e ".txt"  --po
+zowe files download am "Z45864.PROCLIB"     -e ".jcl"  --po
+zowe files download am "Z45864.SOURCE"      -e ".txt"  --po
+zowe files download am "Z45864.SQL"         -e ".sql"  --po
 
 # TSO/MVS SEQUENTIAL FILES (PS)
-zowe files download ds "Z45864.COMPLETE"   -e ".txt" --po 
-zowe files download ds "Z45864.DB2OUT"     -e ".txt" --po
-zowe files download ds "Z45864.JCL3OUT"    -e ".txt" --po
-zowe files download ds "Z45864.SPUFI.IN"   -e ".sql" --po
-zowe files download ds "Z45864.SPUFI.OUT"  -e ".txt" --po
+zowe files download ds "Z45864.COMPLETE"    -e ".txt"  --po 
+zowe files download ds "Z45864.DB2OUT"      -e ".txt"  --po
+zowe files download ds "Z45864.JCL3OUT"     -e ".txt"  --po
+zowe files download ds "Z45864.SPUFI.IN"    -e ".sql"  --po
+zowe files download ds "Z45864.SPUFI.OUT"   -e ".txt"  --po
 
 # RENAME
 mv Z45864 mvs
@@ -41,6 +47,6 @@ rm -r uss/zosmf/workflows
 # RESULTING FILES AND DIRECTORIES INCLUDED IN MY 'VSCODE Z WORKSPACE'
 # THEN COMMITED AND UPLOADED TO GITHUB
 
-# LAST FULL BACKUP => 09.09.2025.-
+# LAST FULL BACKUP => 15.10.2025.-
 
 # RUN THIS AS: ./zowescript.sh

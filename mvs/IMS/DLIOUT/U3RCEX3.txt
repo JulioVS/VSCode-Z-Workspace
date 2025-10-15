@@ -1,0 +1,78 @@
+ ************************************************************************************************************************
+
+ IMS   1510  TEST PROGRAM OUTPUT  ** BEGIN TEST ****TIME= 11.08.15.69 DATE= 25.276
+
+ STATUS INPUT: S 1 1 1 1 1    COURSE
+ 0002 OF 0002  PCB SELECTED =           DBD SELECTED = COURSE
+ COMMENTS   Call 12A                                                                      C  TIME=11.08.15.70 DATE=25.276
+ ........................................................................................................................
+ CALL=GU       SEG=COURSE    FIELD=CODE      OPER==       VALUE=CM17)
+               SEG=NAME      FIELD=LASTNM    OPER==       VALUE=JONES)
+
+ SEGMENT     =(CARLJONES              SEGM #4)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17JONES)
+ COMMENTS   Call 12B                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GNP      SEG=EXPR      FIELD=CLASSIF   OPER==       VALUE=CB4)
+
+ SEGMENT     =(SOME EXPERIENCE CB4    SEGM #6)
+
+ DBPCB   LEV=03  SEG=EXPR      RET CODE=    KFDB LEN=0012  KEY FDB=(CM17JONESCB4)
+ COMMENTS   Call 12C                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GNP
+
+ SEGMENT     =(SOME EDUCATION         SEGM #7                       MBA    )
+
+ DBPCB   LEV=03  SEG=EDUC      RET CODE=GK  KFDB LEN=0012  KEY FDB=(CM17JONESMBA)
+ COMMENTS   Call 12D                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GNP
+
+    NO SEGMENT RETURNED.
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=GE  KFDB LEN=0009  KEY FDB=(CM17JONES)
+ COMMENTS   Call 12E                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GN
+
+ SEGMENT     =(MARYSMITH              SEGM #8)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17SMITH)
+ COMMENTS   Call 13A                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GU       SEG=COURSE    FIELD=CODE      OPER==       VALUE=CM17)
+               SEG=NAME      FIELD=LASTNM    OPER==       VALUE=DAVIS)
+
+    NO SEGMENT RETURNED.
+
+ DBPCB   LEV=01  SEG=COURSE    RET CODE=GE  KFDB LEN=0004  KEY FDB=(CM17)
+ COMMENTS   Call 13B                                                                      C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GNP      SEG=EXPR
+
+1   NO SEGMENT RETURNED.
+
+ DBPCB   LEV=00  SEG=          RET CODE=GP  KFDB LEN=0000
+ COMMENTS   Call 14                                                                       C  TIME=11.08.16.20 DATE=25.276
+ ........................................................................................................................
+ CALL=GU       SEG=COURSE    FIELD=RMCLASS   OPER==       VALUE=CM17)
+
+    NO SEGMENT RETURNED.
+
+ DBPCB   LEV=01  SEG=COURSE    RET CODE=AK  KFDB LEN=0004  KEY FDB=(CM17)
+
+
+ STATISTIC FOR DATA BASE CALL:
+                             GU        GN       GNP       GHU       GHN      GHNP      ISRT      DLET      REPL     TOTAL
+ DL/I COUNTS BY CALL-         3         1         4         0         0         0         0         0         0         8
+ TOTAL NUMBER OF CALLS =         8  TOTAL NUMBER EQUAL COMPARES =         0  TOTAL NUMBER UNEQUAL COMPARES =         0
+
+ PSB= PSB3CBL   STOP TIME= 11.08.16.20 DATE= 25.276
+
+
+ *****************************************END OF TEST   END OF TEST   END OF TEST****************************************
+
+ ************************************************************************************************************************
+

@@ -1,0 +1,30 @@
+U---------------------------------------------------------------------*
+U                                                                     *
+U---+----1----+----2----+----3----+----4----+----5----+----6----+----7*
+S 1 1 1 1 1    COURSE
+U Call 1
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = JONES)
+U Call 2
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = SMITH)                               X
+               EDUC    (DEGREE  = BBA)
+U Call 3
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME                                                    X
+               EXPR    (CLASSIF = PL3)
+U Call 4
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = CAINE)
+U Call 5
+L        GU    NAME    (LASTNM  = SMITH)                               X
+               COURSE  (CODE    = CM17)
+U Call 6
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = SMIT)
+U Call 7
+L        GU    COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = SMIT )
+U Call 8
+L        UG    SKILL   (SKCLASS = PRG)                                 X
+               NAME    (LASTNM  = JONES)
