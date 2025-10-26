@@ -18,7 +18,7 @@
 //*  COMPILE AND LINK FOR CICS WITH ADDED 'SQL' OPTION               *
 //********************************************************************
 //CICS     EXEC DFHZITCL,
-//            CBLPARM=('NODYNAM,RENT,SQL',          COMPILE OPTIONS
+//            CBLPARM=('NODYNAM,RENT,SQL',         COMPILER OPTIONS
 //             'SIZE(4000K),CICS(''COBOL3'')')   TRANSLATOR OPTIONS
 //*
 //COBOL.SYSIN  DD  DISP=SHR,DSN=&SRCLIB.(&MEMBER)

@@ -1,0 +1,71 @@
+ ************************************************************************************************************************
+
+ IMS   1510  TEST PROGRAM OUTPUT  ** BEGIN TEST ****TIME= 10.51.11.03 DATE= 25.276
+
+ STATUS INPUT: S 1 1 1 1 1    COURSE
+ 0002 OF 0002  PCB SELECTED =           DBD SELECTED = COURSE
+ COMMENTS   Call 2A                                                                       C  TIME=10.51.11.04 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME
+
+ SEGMENT     =(JAKEADAMS              SEGM #2)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17ADAMS)
+ COMMENTS   Call 2B                                                                       C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME
+
+ SEGMENT     =(CARLJONES              SEGM #4)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17JONES)
+ COMMENTS   Call 2C                                                                       C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME
+
+ SEGMENT     =(MARYSMITH              SEGM #8)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17SMITH)
+ COMMENTS   Call 2D                                                                       C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME
+
+    NO SEGMENT RETURNED.
+
+ DBPCB   LEV=00  SEG=          RET CODE=GB  KFDB LEN=0000
+ COMMENTS   Call 3A                                                                       C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME      FIELD=LASTNM    OPER==       VALUE=SMITH)
+
+ SEGMENT     =(MARYSMITH              SEGM #8)
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=    KFDB LEN=0009  KEY FDB=(CM17SMITH)
+ COMMENTS   Call 3B                                                                       C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=NAME      FIELD=LASTNM    OPER==       VALUE=JONES)
+
+    NO SEGMENT RETURNED.
+
+ DBPCB   LEV=00  SEG=          RET CODE=GB  KFDB LEN=0000
+ COMMENTS   Call 4                                                                        C  TIME=10.51.11.54 DATE=25.276
+ ........................................................................................................................
+ CALL=GN       SEG=COURSE    FIELD=CODE      OPER==       VALUE=CM17)
+               SEG=NAME      FIELD=LASTNM    OPER==       VALUE=ADAMS)
+               SEG=EXPR      FIELD=CLASSIF   OPER==       VALUE=PL5)
+
+1   NO SEGMENT RETURNED.
+
+ DBPCB   LEV=02  SEG=NAME      RET CODE=GE  KFDB LEN=0009  KEY FDB=(CM17ADAMS)
+
+
+ STATISTIC FOR DATA BASE CALL:
+                             GU        GN       GNP       GHU       GHN      GHNP      ISRT      DLET      REPL     TOTAL
+ DL/I COUNTS BY CALL-         0         7         0         0         0         0         0         0         0         7
+ TOTAL NUMBER OF CALLS =         7  TOTAL NUMBER EQUAL COMPARES =         0  TOTAL NUMBER UNEQUAL COMPARES =         0
+
+ PSB= PSB3CBL   STOP TIME= 10.51.11.54 DATE= 25.276
+
+
+ *****************************************END OF TEST   END OF TEST   END OF TEST****************************************
+
+ ************************************************************************************************************************
+

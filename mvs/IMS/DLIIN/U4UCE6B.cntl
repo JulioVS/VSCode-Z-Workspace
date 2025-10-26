@@ -1,0 +1,17 @@
+U---------------------------------------------------------------------*
+U                                                                     *
+U---+----1----+----2----+----3----+----4----+----5----+----6----+----7*
+S 1 1 1 1 1    COURSE
+U
+U              --- Assume 'UPDATE' mode ---
+U                 (Use Procopt "A" PSB!)
+U
+U              --- Assume SG#1-5 exist  ---
+U                   (Fully loaded DB)
+U
+U Call 11A
+L        GHU   COURSE  (CODE    = CM17)                                X
+               NAME    (LASTNM  = JONES)
+U Call 11B
+L        DLET                                                          X
+         DATA  ANNA                   SEGM #2
