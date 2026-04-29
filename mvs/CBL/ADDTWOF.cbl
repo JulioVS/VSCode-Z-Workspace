@@ -1,0 +1,14 @@
+       IDENTIFICATION DIVISION.
+       FUNCTION-ID. ADDTWOF.
+
+       DATA DIVISION.
+       LINKAGE SECTION.
+       01  LK-A        PIC S9(9) COMP-5.
+       01  LK-B        PIC S9(9) COMP-5.
+       01  LK-RESULT   PIC S9(9) COMP-5.
+
+       PROCEDURE DIVISION USING BY VALUE LK-A LK-B
+                          RETURNING LK-RESULT.
+           COMPUTE LK-RESULT = LK-A + LK-B
+           GOBACK.
+       END FUNCTION ADDTWOF.

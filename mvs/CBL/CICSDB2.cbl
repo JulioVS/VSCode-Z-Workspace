@@ -1,7 +1,7 @@
       *------------------------
        IDENTIFICATION DIVISION.
       *------------------------
-       PROGRAM-ID. DB2CICS.
+       PROGRAM-ID. CICSDB2.
        AUTHOR. JULIO ERRECART.
 
       *---------------------
@@ -9,7 +9,7 @@
       *---------------------
        WORKING-STORAGE SECTION.
 
-       01 WS-MSG  PIC X(75) VALUE 'HELLO WORLD FROM CICS!'.
+       01 WS-MSG  PIC X(75) VALUE 'INITIAL MESSAGE'.
 
       *----------------------------------------------------
       * SQL INCLUDE FOR SQLCA                             *
@@ -18,24 +18,24 @@
               INCLUDE SQLCA
            END-EXEC.
       *----------------------------------------------------
-      * SQL DECLARATION FOR EMPLOYEE TABLE                *
+      * SQL DECLARATION FOR IBM'S EMP TABLE               *
       *----------------------------------------------------
            EXEC SQL
-              INCLUDE EMPLOYEE
+              INCLUDE EMP
            END-EXEC.
       *----------------------------------------------------
       * SQL CURSORS                                       *
       *----------------------------------------------------
            EXEC SQL
               DECLARE CUR1 CURSOR FOR
-                 SELECT * FROM Z45864.EMPLOYEE
+                 SELECT * FROM IBMUSER.EMP
            END-EXEC.
 
       *-------------------
        PROCEDURE DIVISION.
       *-------------------
       *-------------------
-       DB2-CODE SECTION.
+      * DB2 CALLS
       *-------------------
 
            EXEC SQL
@@ -43,7 +43,7 @@
            END-EXEC.
 
            EXEC SQL
-              FETCH CUR1 INTO :DCLEMPLOYEE
+              FETCH CUR1 INTO :DCLEMP
            END-EXEC.
 
            EXEC SQL
@@ -51,16 +51,16 @@
            END-EXEC.
 
            STRING "FIRST EMPLOYEE'S NAME IS: "
-                  FIRST-NAME
+                  FIRSTNME-TEXT(1:FIRSTNME-LEN)
                   " "
-                  LAST-NAME
-                  "."
+                  LASTNAME-TEXT(1:LASTNAME-LEN)
+                  "!"
               DELIMITED BY SIZE
               INTO WS-MSG
            END-STRING.
 
       *-------------------
-       CICS-CODE SECTION.
+      * CICS CALLS
       *-------------------
 
            EXEC CICS SEND TEXT
