@@ -1,0 +1,128 @@
+/* REXX */
+/*********************************************************************/
+/* REXX2 - THE CODE GENERATOR                                        */
+/* Reads a blueprint, parses variables, builds COBOL, and compiles   */
+/*                                                                   */
+/* Replace each <<BLANKx>> with correct command,statement or option  */
+/*                                                                   */
+/*********************************************************************/
+
+ADDRESS TSO
+say "-----------------------------------------"
+say " Starting REXX2 Code Generator..."
+say "-----------------------------------------"
+
+/* Setup Variables */
+/* << BLANK 1: Use the system variable parameter to get the User ID >> */
+USERNAME   = SYSVAR("SYSUID")
+
+BLUEPRINT  = USERNAME'.SOURCE(BLUPRNT)'
+COBOL_OUT  = USERNAME'.SOURCE(HELLOWLD)'
+JCL_OUT    = USERNAME'.JCL(COMPILER)'
+
+/* Call subroutines in order */
+CALL INIT
+CALL READ_BLUEPRINT
+CALL PARSE_DATA
+CALL BUILD_COBOL
+CALL WRITE_COBOL
+CALL SUBMIT_JOB
+say "-----------------------------------------"
+say " Generator complete!                     "
+say "-----------------------------------------"
+EXIT 0
+
+/*-------------------------------------------------------------------*/
+/* INIT: Validate dataset existence                                  */
+/*-------------------------------------------------------------------*/
+INIT:
+  say "Validating blueprint dataset..."
+
+  /* << BLANK 2: Function that checks if a dataset exists >> */
+  CHKDSNAME = SYSDSN("'"BLUEPRINT"'")
+
+  IF CHKDSNAME <> "OK" THEN DO
+    say "ERROR: Blueprint dataset " BLUEPRINT " not found!"
+    EXIT 8
+  END
+/* << BLANK 3: What command sends you back to the main flow? >> */
+RETURN
+
+/*-------------------------------------------------------------------*/
+/* READ_BLUEPRINT: Read the config into memory                       */
+/*-------------------------------------------------------------------*/
+READ_BLUEPRINT:
+  say "Reading blueprint..."
+
+  /* << BLANK 4: Claim the dataset before you can use it >> */
+  "ALLOCATE DA('"BLUEPRINT"') F(INDD) SHR"
+
+  /* << BLANK 5: Use the EXECIO command that READS from the disk >> */
+  "EXECIO * DISKR INDD (FINIS STEM input."
+
+  "FREE F(INDD)"
+RETURN
+
+/*-------------------------------------------------------------------*/
+/* PARSE_DATA: Extract variables using pattern matching              */
+/*-------------------------------------------------------------------*/
+PARSE_DATA:
+  say "Parsing parameters..."
+
+  /* << BLANK 6: Use the command that slices a string by a pattern >> */
+  PARSE VAR input.1 "PGMID: " pgm_id " | AUTHOR: " pgm_auth ,
+  " | MSG: " pgm_msg
+
+  /* Strip trailing spaces just in case */
+  pgm_id = STRIP(pgm_id)
+  pgm_auth = STRIP(pgm_auth)
+  pgm_msg = STRIP(pgm_msg)
+RETURN
+
+/*-------------------------------------------------------------------*/
+/* BUILD_COBOL: Generate the COBOL code into an array                */
+/*-------------------------------------------------------------------*/
+BUILD_COBOL:
+  say "Building COBOL code array..."
+  cobol.0 = 6
+  cobol.1 = "       IDENTIFICATION DIVISION."
+  cobol.2 = "       PROGRAM-ID. "pgm_id"."
+  cobol.3 = "       AUTHOR. "pgm_auth"."
+  cobol.4 = "       PROCEDURE DIVISION."
+  cobol.5 = "           DISPLAY '"pgm_msg"'."
+  cobol.6 = "           STOP RUN."
+RETURN
+
+/*-------------------------------------------------------------------*/
+/* WRITE_COBOL: Write the code to the SOURCE dataset                 */
+/*-------------------------------------------------------------------*/
+WRITE_COBOL:
+  say "Writing COBOL to " COBOL_OUT "..."
+  "ALLOCATE SHR REUSE DA('"COBOL_OUT"') F(OUTDD)"
+
+  /* << BLANK 7: Use the EXECIO command that WRITES to the disk >> */
+  "EXECIO * DISKW OUTDD (FINIS STEM cobol."
+
+  "FREE F(OUTDD)"
+RETURN
+
+/*-------------------------------------------------------------------*/
+/* SUBMIT_JOB: Generate and submit the compiler JCL                  */
+/*-------------------------------------------------------------------*/
+SUBMIT_JOB:
+  say "Generating and submitting Compiler JCL..."
+
+  /* Building a few lines of JCL to point to the new COBOL code */
+  jcl.0 = 3
+  jcl.1 = "//"USERNAME"C JOB 1,NOTIFY=&SYSUID"
+  /* << Note: Execute the standard COBOL compile procedure >> */
+  jcl.2 = "//COMPILE EXEC IGYWCLG"
+  jcl.3 = "//COBOL.SYSIN DD DSN="COBOL_OUT",DISP=SHR"
+
+  "ALLOCATE SHR REUSE DA('"JCL_OUT"') F(JCLDD)"
+  "EXECIO * DISKW JCLDD (FINIS STEM jcl."
+  "FREE F(JCLDD)"
+
+  /* << BLANK 8: Kick off the JCL job >> */
+  "SUBMIT '"JCL_OUT"'"
+RETURN

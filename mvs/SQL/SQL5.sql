@@ -1,0 +1,63 @@
+-----------------------------------------------------------------------
+-- IBM Z Xplore SQL5 Challenge - Sample SQL Queries
+-----------------------------------------------------------------------
+
+-- IBM USER TABLES FOR THE CHALLENGE
+
+SELECT * FROM IBMUSER.EMP;
+
+
+-- 4.1 SUM OF SALARIES
+
+SELECT WORKDEPT,
+       SUM(SALARY) AS SUM_SALARY
+  FROM IBMUSER.EMP
+ GROUP BY WORKDEPT;
+
+-- 4.2 EMPLOYEE NUMBER
+
+SELECT WORKDEPT,
+       COUNT(EMPNO) AS EMP_COUNT
+  FROM IBMUSER.EMP
+ GROUP BY WORKDEPT;
+
+-- 4.3 FILTERING EMPLOYEE NUMBER
+
+SELECT WORKDEPT,
+       COUNT(EMPNO) AS EMP_COUNT
+  FROM IBMUSER.EMP
+ GROUP BY WORKDEPT
+HAVING COUNT(EMPNO) > 3
+ ORDER BY WORKDEPT;
+
+-- 4.4 AVERAGES
+
+SELECT WORKDEPT,
+       SEX,
+       DECIMAL(ROUND(AVG(SALARY), 2), 8, 2) AS AVG_SALARY,
+       DECIMAL(ROUND(AVG(BONUS), 2), 8, 2) AS AVG_BONUS,
+       DECIMAL(ROUND(AVG(COMM), 2), 8, 2) AS AVG_COMM,
+       COUNT(*) AS COUNT
+  FROM IBMUSER.EMP
+ GROUP BY WORKDEPT, SEX
+HAVING COUNT(*) > 1;
+
+-- 4.5 HIGH AVERAGES                <= Evaluation Query!!!
+
+SELECT WORKDEPT,
+       DECIMAL(ROUND(AVG(BONUS), 2), 8, 2) AS AVG_BONUS,
+       DECIMAL(ROUND(AVG(COMM), 2), 8, 2) AS AVG_COMM
+  FROM IBMUSER.EMP
+ GROUP BY WORKDEPT
+HAVING AVG(BONUS) > 500 AND AVG(COMM) > 2000
+ ORDER BY WORKDEPT;
+
+-- 4.6 PUTTING IT ALL TOGETHER (EXPORT)
+
+-->  Exported last query (4.5) results to "DB2OUT5.csv"
+
+-- 4.7 LAST CHECK AND WRAP-UP
+
+-->  Uploaded the csv file to my 'Z45864.OUTPUT' dataset
+-->  Submitted the validation job CHKSQL5 at 'ZXP.PUBLIC.JCL'
+-->  It was successful! Challenge done :)

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flask app for the Code-A-Thon</title>
+</head>
+
+<body>
+    <header>
+        <h1>Catalog items</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ItemID</th>
+                    <th>Picture</th>
+                    <th>Description</th>
+                    <th>on Order</th>
+                    <th>in Stock</th>
+                    <th>Price</th>
+                    <th>Color</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in catalog %}
+                <tr>
+                    <td>{{ item.ca_sngl_item_ref }}</td>
+                    <td>
+                        <img src="http://192.86.32.12:1880/product/image/{{ item.ca_sngl_item_ref }}"
+                            style="width:25px;height:30px;">
+                    </td>
+                    <td>
+                        <a href="/detailedInfo?itemID={{item.ca_item_ref}}">{{ item.ca_sngl_description }}</a>
+                    </td>
+                    <td>{{ item.on_sngl_order }}</td>
+                    <td>{{ item.in_sngl_stock }}</td>
+                    <td>{{ item.ca_sngl_cost }}</td>
+                    <td style="background-color: #{{ item.hex }}">
+                        {{ item.color }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </header>
+</body>
+
+</html>

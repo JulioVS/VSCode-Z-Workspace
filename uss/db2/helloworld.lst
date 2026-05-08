@@ -1,4 +1,4 @@
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221                 Date 04/07/2025  Time 17:17:30   Page     1                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220                 Date 05/02/2026  Time 21:21:28   Page     1                
 0Invocation parameters:                                                                                                              
   RENT,TERM                                                                                                                          
 0Options in effect:                                                                                                                  
@@ -56,7 +56,7 @@
   NOOFFSET                                                                                                                           
     OPTIMIZE(0)                                                                                                                      
     OUTDD(SYSOUT)                                                                                                                    
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221                 Date 04/07/2025  Time 17:17:30   Page     2                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220                 Date 05/02/2026  Time 21:21:28   Page     2                
 0 NOPARMCHECK                                                                                                                        
     PGMNAME(COMPAT)                                                                                                                  
     QUALIFY(COMPAT)                                                                                                                  
@@ -65,7 +65,7 @@
   NORULES                                                                                                                            
   NOSERVICE                                                                                                                          
     SEQUENCE                                                                                                                         
-    SMARTBIN                                                                                                                         
+    SMARTBIN(NONAMES)                                                                                                                
     SOURCE(DEC)                                                                                                                      
     SPACE(1)                                                                                                                         
   NOSQL                                                                                                                              
@@ -86,7 +86,7 @@
     XMLPARSE(XMLSS)                                                                                                                  
     XREF(FULL)                                                                                                                       
     ZWB                                                                                                                              
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     3                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220       HELLOCOB  Date 05/02/2026  Time 21:21:28   Page     3                
    LineID  PL SL  ----+-*A-1-B--+----2----+----3----+----4----+----5----+----6----+----7-|--+----8 Map and Cross Reference           
 0  000001               * Program name: HELLOCOB                                                                                     
    000002               *****************************************************************                                            
@@ -105,13 +105,13 @@
    000015                    MOVE "Hello world!" TO WS-HELLO.                                      11                                
    000016                    DISPLAY WS-HELLO.                                                     11                                
    000017                    STOP RUN.                                                                                               
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     4                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220       HELLOCOB  Date 05/02/2026  Time 21:21:28   Page     4                
 0An "M" preceding a data-name reference indicates that the data-name is modified by this reference.                                  
                                                                                                                                      
   Defined   Cross-reference of data names   References                                                                               
                                                                                                                                      
        11   WS-HELLO . . . . . . . . . . .  M15 16                                                                                   
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     5                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220       HELLOCOB  Date 05/02/2026  Time 21:21:28   Page     5                
 0Context usage is indicated by the letter preceding a procedure-name reference.                                                      
  These letters and their meanings are:                                                                                               
      A = ALTER (procedure-name)                                                                                                      
@@ -125,7 +125,7 @@
   Defined   Cross-reference of procedures   References                                                                               
                                                                                                                                      
        14   MAIN-PARA                                                                                                                
-1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P250221       HELLOCOB  Date 04/07/2025  Time 17:17:30   Page     6                
+1PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 P260220       HELLOCOB  Date 05/02/2026  Time 21:21:28   Page     6                
 0 Defined   Cross-reference of programs     References                                                                               
                                                                                                                                      
         4   HELLOCOB                                                                                                                 
