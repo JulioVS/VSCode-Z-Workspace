@@ -52,7 +52,7 @@ SELECT LASTNAME,
        END
        > 0.08;
 
--- 4.4 THE ALL SUBQUERY
+-- 4.4 THE 'ALL' SUBQUERY
 
 SELECT EMPNO,
        LASTNAME,

@@ -6,7 +6,7 @@ rm -r mvs
 rm -r uss
 
 # TSO/MVS LIBRARIES (PDS)
-zowe files download am "Z45864.ASM"         -e ".asm"  --po  
+zowe files download am "Z45864.ASM1"        -e ".asm"  --po  
 zowe files download am "Z45864.CBL"         -e ".cbl"  --po  
 zowe files download am "Z45864.CICS.SYSIN"  -e ".txt"  --po
 zowe files download am "Z45864.COPYLIB"     -e ".cpy"  --po

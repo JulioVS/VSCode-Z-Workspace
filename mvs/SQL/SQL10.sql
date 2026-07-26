@@ -122,6 +122,27 @@ SELECT *
   FROM CAR_PARTS
  ORDER BY LEVEL, ASSEMBLY, COMPONENT;
 
+-- BONUS EXAMPLE: RECURSIVE NUMBER SEQUENCE
+
+WITH NumberSequence (num) AS
+(
+     -- Anchor: Start with 1 (runs once)
+     SELECT 1 AS num
+       FROM SYSIBM.SYSDUMMY1
+
+      UNION ALL
+
+     -- Recursive member: Add 1 to the previous value (loops)
+     SELECT num + 1
+       FROM NumberSequence
+      WHERE num < 5 -- Termination condition
+)
+
+SELECT num
+  FROM NumberSequence;
+
+--
+
 -- 5 PUTTING IT ALL TOGETHER (EXPORT)
 
 -->  Exported last query (4.4) results to "DB2OUT10.csv"
