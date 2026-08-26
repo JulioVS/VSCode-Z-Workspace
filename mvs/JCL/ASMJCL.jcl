@@ -3,7 +3,7 @@
 //*   MY ASSEMBLY COMPILE & LINK JOB
 //*
 // EXPORT SYMLIST=(*)
-// SET MYPRG='LAB503'
+// SET MYPRG='LAB503'   z/Architecture Assembler Language, Part 2 Labs
 //*
 //CL       EXEC ASMACL,
 //             PARM.L=(MAP,LET,LIST),
